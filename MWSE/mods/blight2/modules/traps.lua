@@ -1,12 +1,12 @@
-local common = require("Blight.common")
+local common = require("blight.common")
 
 local function isTrapTriggered(trap)
-    return trap.data.Blight ~= nil and trap.data.Blight.triggered == true
+    return trap.data.blight ~= nil and trap.data.blight.triggered == true
 end
 
 local function setTrapTriggered(trap)
-    trap.data.Blight = trap.data.Blight or {}
-    trap.data.Blight.triggered = true
+    trap.data.blight = trap.data.blight or {}
+    trap.data.blight.triggered = true
 end
 
 
@@ -38,7 +38,7 @@ local function proximityTrapCallback(trap)
         common.debug("Processing Proximity trap: %s", trap)
 
         -- Trigger disease
-        event.trigger("Blight:TriggerDisease", {
+        event.trigger("blight:TriggerDisease", {
             reference = tes3.player,
             diseaseId = config.diseaseId
         })
@@ -68,7 +68,7 @@ local function onCollision(e)
         local config = common.traps.collision[trap.object.id]
 
         -- Trigger disease
-        event.trigger("Blight:TriggerDisease", {
+        event.trigger("blight:TriggerDisease", {
             reference = tes3.player,
             diseaseId = config.diseaseId
         })

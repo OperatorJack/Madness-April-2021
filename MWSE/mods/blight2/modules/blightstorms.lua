@@ -1,4 +1,4 @@
-local common = require("Blight.common")
+local common = require("blight.common")
 
 
 
@@ -8,7 +8,7 @@ event.register("cellChanged", function(e)
         return
     end
 
-    if (tes3.worldController.weatherController.currentWeather.index ~= tes3.weather.blight) then
+    if (tes3.worldController.weatherController.currentWeather.index ~= tes3.weather.Blight) then
         return
     end
 
@@ -22,7 +22,7 @@ event.register("cellChanged", function(e)
 
     common.debug("Player is contracting blight from blightstorm.")
 
-    event.trigger("Blight:TriggerDisease", {
+    event.trigger("blight:TriggerDisease", {
         reference = tes3.player,
         displayMessage = true,
         message = "You have contracted %s."

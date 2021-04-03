@@ -15,11 +15,11 @@ if (mwse.buildDate == nil) or (mwse.buildDate < 20201010) then
 end
 ----------------------------
 
-local common = require("Blight.common")
-require("Blight.modules.diseases")
-require("Blight.modules.traps")
-require("Blight.modules.blightstorms")
-require("Blight.modules.blight-progression")
+local common = require("blight.common")
+require("blight.modules.diseases")
+require("blight.modules.traps")
+require("blight.modules.blightstorms")
+require("blight.modules.blight-progression")
 
 local function initialized()
     for object in tes3.iterateObjects({tes3.objectType.spell}) do

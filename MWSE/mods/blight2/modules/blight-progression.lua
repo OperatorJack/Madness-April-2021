@@ -1,11 +1,11 @@
-local common = require("Blight.common")
+local common = require("blight.common")
 
 -- Possible can be resisted, buttt.....
 event.register("spellResist", function(e)
     if  e.target == tes3.player and 
-        tes3.player.data.Blight.blightProgession and 
+        tes3.player.data.blight.blightProgession and 
         e.effectInstance.effectId == tes3.effect.cureBlightDisease then
-        tes3.player.data.Blight.blightProgession = {}
+        tes3.player.data.blight.blightProgession = {}
     end
 end)
 
@@ -14,9 +14,9 @@ local function onLoaded()
         duration = 10,
         iterations = -1,
         callback = function()
-            tes3.player.data.Blight = tes3.player.data.Blight or {}
-            tes3.player.data.Blight.blightProgession = tes3.player.data.Blight.blightProgession or {}
-            local progressions = tes3.player.data.Blight.blightProgession
+            tes3.player.data.blight = tes3.player.data.blight or {}
+            tes3.player.data.blight.blightProgession = tes3.player.data.blight.blightProgession or {}
+            local progressions = tes3.player.data.blight.blightProgession
 
             for spell in tes3.iterate(tes3.player.object.spells.iterator) do
                 if (common.diseases[spell.id]) then
@@ -46,7 +46,7 @@ local function onLoaded()
                                 effect.max = 5 * progression.progression
                             end
 
-                            progressionSpell.castType = tes3.spellType.blight
+                            progressionSpell.castType = tes3.spellType.Blight
 
                             if not tes3.player.object.spells:contains(progressionSpell) then
                                 mwscript.addSpell({
