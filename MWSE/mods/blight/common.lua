@@ -27,6 +27,16 @@ end
 
 function common.iterBlightDiseases(reference)
     return coroutine.wrap(function()
+        -- special handling for containers
+        if  reference.object.organic and 
+            reference.data.blight and 
+            reference.data.blight.diseases then
+            for spell in pairs(reference.data.blight.diseases) do
+                coroutine.yield(tes3.getObject(spell))
+            end
+            return
+        end
+        -- alternative handling for actors
         for _, spell in pairs(reference.object.spells.iterator) do
             if common.diseases[spell.id] then
                 coroutine.yield(spell)
@@ -42,7 +52,7 @@ end
 function common.getTransmittableBlightDiseases(source, target)
     local spells={}
     for spell in common.iterBlightDiseases(source) do
-        if not common.isBlightProgressionDisease(spell) and not target.object.spells:contains(spell) then
+        if not common.isBlightProgressionDisease(spell) and not common.hasBlight(target, spell) then
             table.insert(spells, spell)
         end
     end
@@ -80,16 +90,20 @@ function common.calculateBlightChance(reference)
 end
 
 
-function common.hasBlight(reference)
+function common.hasBlight(reference, searchSpell)
     for spell in common.iterBlightDiseases(reference) do
-        return true, spell
+        if searchSpell and searchSpell.id == spell.id or not searchSpell then
+            return true, spell
+        end
     end
     return false
 end
 
 function common.addBlight(reference, spellId)
-    if (reference.object.objectType == tes3.objectType.container) then
-        
+    if reference.object.organic then
+        reference.data.blight = reference.data.blight or {}
+        reference.data.blight.diseases = reference.data.blight.diseases or {}
+        reference.data.blight.diseases[spellId] = true
     else
         mwscript.addSpell({
             reference = reference,
@@ -99,8 +113,10 @@ function common.addBlight(reference, spellId)
 end
 
 function common.removeBlight(reference, spellId)
-    if (reference.object.objectType == tes3.objectType.container) then
-        
+    if reference.object.organic then
+        reference.data.blight = reference.data.blight or {}
+        reference.data.blight.diseases = reference.data.blight.diseases or {}
+        reference.data.blight.diseases[spellId] = nil
     else
         mwscript.removeSpell({
             reference = reference,
