@@ -21,11 +21,19 @@ function common.getKeyFromValueFunc(tbl, func)
     return nil
 end
 
-function common.hasBlight(reference)
-    for _, spell in pairs(reference.object.spells) do
-        if (common.diseases[spell.id]) then
-            return true
+function common.iterBlightDiseases(reference)
+    return coroutine.wrap(function()
+        for spell in tes3.iterate(tes3.player.object.spells.iterator) do
+            if common.diseases[spell.id] then
+                coroutine.yield(spell)
+            end
         end
+    end)
+end
+
+function common.hasBlight(reference)
+    for spell in common.iterBlightDiseases(reference) do
+        return true
     end
     return false
 end
