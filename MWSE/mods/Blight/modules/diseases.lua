@@ -1,10 +1,10 @@
-local common = require("OJ_G7_21.common")
+local common = require("Blight.common")
 
 local function getRandomDisease()
     return tes3.getObject(table.choice(common.diseases).id)
 end
 
-event.register("OJ_G7_21:TriggerDisease", function(e)
+event.register("Blight:TriggerDisease", function(e)
     local disease = e.diseaseId and tes3.getObject(e.diseaseId) or getRandomDisease()
     mwscript.addSpell({
         reference = e.reference, 

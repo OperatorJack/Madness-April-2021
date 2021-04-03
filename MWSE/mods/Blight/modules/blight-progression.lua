@@ -1,11 +1,11 @@
-local common = require("OJ_G7_21.common")
+local common = require("Blight.common")
 
 -- Possible can be resisted, buttt.....
 event.register("spellResist", function(e)
     if  e.target == tes3.player and 
-        tes3.player.data.OJ_G7_21.blightProgession and 
+        tes3.player.data.Blight.blightProgession and 
         e.effectInstance.effectId == tes3.effect.cureBlightDisease then
-        tes3.player.data.OJ_G7_21.blightProgession = {}
+        tes3.player.data.Blight.blightProgession = {}
     end
 end)
 
@@ -14,9 +14,9 @@ local function onLoaded()
         duration = 10,
         iterations = -1,
         callback = function()
-            tes3.player.data.OJ_G7_21 = tes3.player.data.OJ_G7_21 or {}
-            tes3.player.data.OJ_G7_21.blightProgession = tes3.player.data.OJ_G7_21.blightProgession or {}
-            local progressions = tes3.player.data.OJ_G7_21.blightProgession
+            tes3.player.data.Blight = tes3.player.data.Blight or {}
+            tes3.player.data.Blight.blightProgession = tes3.player.data.Blight.blightProgession or {}
+            local progressions = tes3.player.data.Blight.blightProgession
 
             for spell in tes3.iterate(tes3.player.object.spells.iterator) do
                 if (common.diseases[spell.id]) then

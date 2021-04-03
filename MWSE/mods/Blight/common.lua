@@ -1,10 +1,10 @@
-local modname = "OJ_G7"
+local modname = "Blight"
 local common = {}
 
 local debugMode = true
 local prepend = '[' .. modname .. ': DEBUG] '
 
-common.getBlightLevel = require("OJ_G7_21.modules.getBlightLevel")
+common.getBlightLevel = require("Blight.modules.getBlightLevel")
 
 function common.debug(str, ...)
     if (debugMode == true) then
@@ -67,7 +67,7 @@ common.diseases = {
 common.traps = {
     -- Constantly checks proximity to player and triggers trap.
     proximity = {
-        ["OJ_G7_21_TrapProxStaticTest"] = {
+        ["Blight_TrapProxStaticTest"] = {
             animate = true,
             proximity = 256,
             diseaseId = "VV20_DiseaseTrapTest3"
@@ -75,7 +75,7 @@ common.traps = {
     },
     -- Triggers trap on collision with player.
     collision = {
-        ["OJ_G7_21_TrapCollStaticTest"] = {
+        ["Blight_TrapCollStaticTest"] = {
             animate = true
         }
     }

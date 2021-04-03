@@ -1,4 +1,4 @@
-local common = require("OJ_G7_21.common")
+local common = require("Blight.common")
 
 
 
@@ -22,7 +22,7 @@ event.register("cellChanged", function(e)
 
     common.debug("Player is contracting blight from blightstorm.")
 
-    event.trigger("OJ_G7_21:TriggerDisease", {
+    event.trigger("Blight:TriggerDisease", {
         reference = tes3.player,
         displayMessage = true,
         message = "You have contracted %s."

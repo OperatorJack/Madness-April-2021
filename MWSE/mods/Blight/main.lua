@@ -1,5 +1,5 @@
 
-local modname = "OJ_G7"
+local modname = "Blight"
 
 -- Check MWSE Build --
 if (mwse.buildDate == nil) or (mwse.buildDate < 20201010) then
@@ -15,11 +15,11 @@ if (mwse.buildDate == nil) or (mwse.buildDate < 20201010) then
 end
 ----------------------------
 
-local common = require("OJ_G7_21.common")
-require("OJ_G7_21.modules.diseases")
-require("OJ_G7_21.modules.traps")
-require("OJ_G7_21.modules.blightstorms")
-require("OJ_G7_21.modules.blight-progression")
+local common = require("Blight.common")
+require("Blight.modules.diseases")
+require("Blight.modules.traps")
+require("Blight.modules.blightstorms")
+require("Blight.modules.blight-progression")
 
 local function initialized()
     for object in tes3.iterateObjects({tes3.objectType.spell}) do
