@@ -1,6 +1,6 @@
 local common = require("blight.common")
 
-local function attemptTransmission(reference, isTransmitterPlayer, transmitterName)
+local function attemptTransmission(reference, isTransmitterPlayer, transmitterName, spell)
     local chance = common.calculateBlightChance(reference)
     local message = "You have transmitted %s to " .. reference.object.name .. "." 
     if (isTransmitterPlayer == false) then
@@ -10,6 +10,8 @@ local function attemptTransmission(reference, isTransmitterPlayer, transmitterNa
   --  if common.calculateChanceResult(chance) then
         event.trigger("blight:TriggerBlight", {
             reference = reference,
+            diseaseId = spell.id,
+            displayMessage = true,
             message = message
         })
   --  end
@@ -22,26 +24,15 @@ event.register("activate", function(e)
     end
 
     local activator = e.activator
-    local actHasBlight = false
-
     local target = e.target
-    local targetHasBlight = false
-
-    -- Check if activating actor has blight, and check transmission to target if so.
-    if common.hasBlight(activator) == true then
-        actHasBlight = true
-    end
-
-    -- Check if target has blight, and check transmission to activating actor if so.
-    if common.hasBlight(target) == true then
-        targetHasBlight = true
-    end
+    local actorSpells, actCanTransmit = common.getTransmittableBlightDiseases(activator, target)
+    local targetSpells, targetCanTransmit = common.getTransmittableBlightDiseases(target, activator)
 
     -- Calculated blight status separately so that the first actions would not impact the target's set of actions.
-    if actHasBlight == true then
-        attemptTransmission(target, activator == tes3.player, activator.object.name)
+    if actCanTransmit == true then
+        attemptTransmission(target, activator == tes3.player, activator.object.name, table.choice(actorSpells))
     end
-    if targetHasBlight == true then
-        attemptTransmission(activator, target == tes3.player, target.object.name)
+    if targetCanTransmit == true then
+        attemptTransmission(activator, target == tes3.player, target.object.name, table.choice(targetSpells))
     end
 end)

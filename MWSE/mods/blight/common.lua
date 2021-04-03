@@ -37,9 +37,19 @@ end
 
 function common.hasBlight(reference)
     for spell in common.iterBlightDiseases(reference) do
-        return true
+        return true, spell
     end
     return false
+end
+
+function common.getTransmittableBlightDiseases(source, target)
+    local spells={}
+    for spell in common.iterBlightDiseases(source) do
+        if not spell.id:endswith("_P") and not target.object.spells:contains(spell) then
+            table.insert(spells, spell)
+        end
+    end
+    return spells, #spells > 0
 end
 
 function common.calculateBlightChance(reference)
