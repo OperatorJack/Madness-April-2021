@@ -45,7 +45,7 @@ local function onLoaded()
                         progression.nextProgession = math.random(2, 8)
                         progression.days = 0
 
-                        local progressionSpellId = spell.id .. "_P"
+                        local progressionSpellId = "TB_" .. spell.id .. "_P"
                         local progressionSpell = tes3.getObject(progressionSpellId) or tes3spell.create(progressionSpellId, "Infectious " .. spell.name)
 
                         progressionSpell.name = "Infectious " .. spell.name
@@ -71,7 +71,7 @@ local function onLoaded()
                             spell = progressionSpell
                         })
 
-                        tes3.messageBox(string.format("Your %s worsens.", spell.name))
+                        tes3.messageBox("Your %s worsens.", spell.name)
                     end
                 end
             end

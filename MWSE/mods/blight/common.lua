@@ -35,6 +35,10 @@ function common.iterBlightDiseases(reference)
     end)
 end
 
+function common.isBlightProgressionDisease(spell)
+    return spell.id:find("^TB_.*_P$") ~= nil
+end
+
 function common.hasBlight(reference)
     for spell in common.iterBlightDiseases(reference) do
         return true, spell
@@ -45,7 +49,7 @@ end
 function common.getTransmittableBlightDiseases(source, target)
     local spells={}
     for spell in common.iterBlightDiseases(source) do
-        if not spell.id:endswith("_P") and not target.object.spells:contains(spell) then
+        if not common.isBlightProgressionDisease(spell) and not target.object.spells:contains(spell) then
             table.insert(spells, spell)
         end
     end

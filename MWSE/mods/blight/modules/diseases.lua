@@ -13,7 +13,7 @@ event.register("blight:TriggerDisease", function(e)
 
     if e.displayMessage == true then
         local diseaseName = disease.name
-        tes3.messageBox(string.format(e.message, diseaseName))
+        tes3.messageBox(e.message, diseaseName)
     end
 end)
 
