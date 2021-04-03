@@ -20,7 +20,7 @@ require("blight.modules.diseases")
 require("blight.modules.traps")
 require("blight.modules.blightstorms")
 require("blight.modules.blight-progression")
-require("blight.modules.dialogue-transmission")
+require("blight.modules.active-transmission")
 require("blight.modules.passive-transmission")
 require("blight.modules.decal-mapping")
 

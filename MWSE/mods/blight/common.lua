@@ -62,6 +62,13 @@ end
 function common.calculateBlightChance(reference)
     local chance = 10 --Base Chance
 
+    -- It's a plant!
+    if (reference.object.organic == true) then
+        return chance
+    end
+
+    -- It's not a plant! Proceed normally.
+
     -- Modify based on helmet
     for _, stack in pairs(reference.object.equipment) do
         local object = stack.object

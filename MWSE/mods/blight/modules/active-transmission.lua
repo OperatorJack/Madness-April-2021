@@ -2,7 +2,7 @@ local common = require("blight.common")
 
 local function attemptTransmission(reference, isTransmitterPlayer, transmitterName, spell)
     local chance = common.calculateBlightChance(reference)
-    local message = "You have transmitted %s to " .. reference.object.name .. "." 
+    local message = "You have transmitted %s to " .. reference.object.name .. "."
     if (isTransmitterPlayer == false) then
         message = "You have contracted %s from " .. transmitterName .. "."
     end
@@ -18,7 +18,8 @@ local function attemptTransmission(reference, isTransmitterPlayer, transmitterNa
 end
 
 event.register("activate", function(e)
-    if  e.target.object.objectType ~= tes3.objectType.npc and
+    if  e.target.object.organic ~= true and
+        e.target.object.objectType ~= tes3.objectType.npc and
         e.target.object.objectType ~= tes3.objectType.creature then
         return
     end
