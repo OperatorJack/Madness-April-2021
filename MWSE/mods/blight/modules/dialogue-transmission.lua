@@ -7,14 +7,14 @@ local function attemptTransmission(reference, isTransmitterPlayer, transmitterNa
         message = "You have contracted %s from " .. transmitterName .. "."
     end
 
-  --  if common.calculateChanceResult(chance) then
+    if common.calculateChanceResult(chance) then
         event.trigger("blight:TriggerBlight", {
             reference = reference,
             diseaseId = spell.id,
             displayMessage = true,
             message = message
         })
-  --  end
+    end
 end
 
 event.register("activate", function(e)
