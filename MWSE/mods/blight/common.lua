@@ -23,7 +23,7 @@ end
 
 function common.iterBlightDiseases(reference)
     return coroutine.wrap(function()
-        for spell in tes3.iterate(tes3.player.object.spells.iterator) do
+        for _, spell in pairs(reference.object.spells.iterator) do
             if common.diseases[spell.id] then
                 coroutine.yield(spell)
             end
