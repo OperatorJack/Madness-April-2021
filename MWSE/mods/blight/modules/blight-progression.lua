@@ -3,6 +3,7 @@ local common = require("blight.common")
 -- Possible can be resisted, buttt.....
 event.register("spellResist", function(e)
     if  e.target == tes3.player and 
+        tes3.player.data.blight and
         tes3.player.data.blight.blightProgession and 
         e.effectInstance.effectId == tes3.effect.cureBlightDisease then
         tes3.player.data.blight.blightProgession = {}
