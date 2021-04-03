@@ -64,7 +64,7 @@ local function onLoaded()
                             effect.attribute = newEffect.attribute
                         end
 
-                        progressionSpell.castType = tes3.spellType.Blight
+                        progressionSpell.castType = tes3.spellType.blight
 
                         mwscript.addSpell({
                             reference = tes3.player,
