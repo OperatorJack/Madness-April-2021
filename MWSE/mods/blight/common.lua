@@ -110,6 +110,11 @@ function common.addBlight(reference, spellId)
             spell = spellId
         })      
     end
+
+    event.trigger("blight:AddedBlight", {
+        reference = reference,
+        diseaseId = spellId,
+    })
 end
 
 function common.removeBlight(reference, spellId)
@@ -123,6 +128,11 @@ function common.removeBlight(reference, spellId)
             spell = spellId
         })      
     end
+
+    event.trigger("blight:RemovedBlight", {
+        reference = reference,
+        diseaseId = spellId,
+    })
 end
 
 common.diseases = {

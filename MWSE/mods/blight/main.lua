@@ -22,6 +22,7 @@ require("blight.modules.blightstorms")
 require("blight.modules.blight-progression")
 require("blight.modules.dialogue-transmission")
 require("blight.modules.passive-transmission")
+require("blight.modules.decal-mapping")
 
 local function initialized()
     for object in tes3.iterateObjects({tes3.objectType.spell}) do
