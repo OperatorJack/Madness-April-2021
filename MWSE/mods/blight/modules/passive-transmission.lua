@@ -22,6 +22,7 @@ local function onRefCreated(e)
         e.reference.data.blight.passiveTransmission then
         for spellId, day in pairs(e.reference.data.blight.passiveTransmission) do
             if day <= tes3.worldController.daysPassed.value then
+                common.debug("%s recovered from %s blight disease!", e.reference, spellId)
                 common.removeBlight(e.reference, spellId)
                 e.reference.data.blight.passiveTransmission[spellId] = nil
             end
@@ -30,14 +31,14 @@ local function onRefCreated(e)
  
 
     -- roll for chance of catching blight disease
-    -- blight level 1 -> 1*5 == 5%
-    -- blight level 3 -> 3*5 == 15%
-    -- blight level 5 -> 5*5 == 25%
-    local threshold = blightLevel * 5
+    -- blight level 1 -> 1*4 == 4%
+    -- blight level 3 -> 3*4 == 12%
+    -- blight level 5 -> 5*4 == 20%
+    local threshold = blightLevel * 4
     local roll = math.random(100)
 
     if threshold > roll then
-        mwse.log("%s has caught blight disease! (threshold=%s vs roll=%s)", e.reference, threshold, roll)
+        common.debug("%s has caught blight disease! (threshold=%s vs roll=%s)", e.reference, threshold, roll)
         event.trigger("blight:TriggerDisease", { 
             reference = e.reference, 
             displayMessage = false, 
