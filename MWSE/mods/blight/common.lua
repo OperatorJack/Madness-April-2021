@@ -39,13 +39,6 @@ function common.isBlightProgressionDisease(spell)
     return spell.id:find("^TB_.*_P$") ~= nil
 end
 
-function common.hasBlight(reference)
-    for spell in common.iterBlightDiseases(reference) do
-        return true, spell
-    end
-    return false
-end
-
 function common.getTransmittableBlightDiseases(source, target)
     local spells={}
     for spell in common.iterBlightDiseases(source) do
@@ -84,6 +77,36 @@ function common.calculateBlightChance(reference)
 	end
 
     return chance
+end
+
+
+function common.hasBlight(reference)
+    for spell in common.iterBlightDiseases(reference) do
+        return true, spell
+    end
+    return false
+end
+
+function common.addBlight(reference, spellId)
+    if (reference.object.objectType == tes3.objectType.container) then
+        
+    else
+        mwscript.addSpell({
+            reference = reference,
+            spell = spellId
+        })      
+    end
+end
+
+function common.removeBlight(reference, spellId)
+    if (reference.object.objectType == tes3.objectType.container) then
+        
+    else
+        mwscript.removeSpell({
+            reference = reference,
+            spell = spellId
+        })      
+    end
 end
 
 common.diseases = {

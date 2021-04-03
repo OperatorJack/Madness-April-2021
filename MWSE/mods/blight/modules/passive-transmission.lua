@@ -17,6 +17,18 @@ local function onRefCreated(e)
         return
     end
 
+    -- Check for expired blight diseases on reference, remove if expired.
+    if  e.reference.data.blight and
+        e.reference.data.blight.passiveTransmission then
+        for spellId, day in pairs(e.reference.data.blight.passiveTransmission) do
+            if day <= tes3.worldController.daysPassed.value then
+                common.removeBlight(e.reference, spellId)
+                e.reference.data.blight.passiveTransmission[spellId] = nil
+            end
+        end
+    end
+ 
+
     -- roll for chance of catching blight disease
     -- blight level 1 -> 1*5 == 5%
     -- blight level 3 -> 3*5 == 15%
@@ -26,7 +38,16 @@ local function onRefCreated(e)
 
     if threshold > roll then
         mwse.log("%s has caught blight disease! (threshold=%s vs roll=%s)", e.reference, threshold, roll)
-        event.trigger("blight:TriggerDisease", { reference = e.reference, displayMessage = false })
+        event.trigger("blight:TriggerDisease", { 
+            reference = e.reference, 
+            displayMessage = false, 
+            callback = function (spell)
+                -- Setup information to remove disease later.
+                e.reference.data.blight = e.reference.data.blight or {}
+                e.reference.data.blight.passiveTransmission = e.reference.data.blight.passiveTransmission or {}
+                e.reference.data.blight.passiveTransmission[spell.id] = tes3.worldController.daysPassed.value + math.random(2,8)
+            end
+        })
     end
 end
 event.register("referenceActivated", onRefCreated)

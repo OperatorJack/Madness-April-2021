@@ -7,3 +7,4 @@ local gear = {
 local function getRandomGear()
     return table.choice(gear).id
 end
+
