@@ -19,7 +19,7 @@ end
 -- Levels range 0 to 5. With 5 being the most-blighted areas.
 -- The levels are calculated from the distance to the closest blighted region.
 local function getBlightLevel(cell)
-    if cell.region == nil then
+    if not (cell and cell.region) then
         return 0
     elseif cell.region.weatherChanceBlight > 0 then
         return 5
