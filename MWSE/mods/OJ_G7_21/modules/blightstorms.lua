@@ -9,7 +9,7 @@ event.register("cellChanged", function(e)
         return
     end
 
-    -- Only proc if 10% chance is met.
+    -- Only proc if chance is met.
     if (math.random(0, 100) > 5) then
         return
     end
