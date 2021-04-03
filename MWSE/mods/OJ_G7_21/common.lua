@@ -4,6 +4,8 @@ local common = {}
 local debugMode = true
 local prepend = '[' .. modname .. ': DEBUG] '
 
+common.getBlightLevel = require("OJ_G7_21.modules.getBlightLevel")
+
 function common.debug(str, ...)
     if (debugMode == true) then
         str = prepend .. str
@@ -25,7 +27,7 @@ function common.calculateBlightChance(reference)
     -- Modify based on helmet
     for _, stack in pairs(reference.object.equipment) do
         local object = stack.object
-		if object.objectType == tes3.objectType.armor then 
+		if object.objectType == tes3.objectType.armor then
             local parts = 0
             if object.slot == tes3.armorSlot.helmet then
                 for _, part in pairs(object.parts) do
@@ -43,7 +45,6 @@ function common.calculateBlightChance(reference)
             end
 
             chance = chance - parts
-            
 		end
 	end
 
@@ -70,6 +71,5 @@ common.traps = {
         }
     }
 }
-
 
 return common

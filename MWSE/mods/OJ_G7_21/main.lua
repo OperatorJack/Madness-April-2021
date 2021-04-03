@@ -15,8 +15,6 @@ if (mwse.buildDate == nil) or (mwse.buildDate < 20201010) then
 end
 ----------------------------
 
-
-
 local common = require("OJ_G7_21.common")
 require("OJ_G7_21.modules.diseases")
 require("OJ_G7_21.modules.traps")
@@ -37,11 +35,10 @@ local function initialized()
 end
 event.register("initialized", initialized)
 
-local function loadTestCell(e)
+local function debugKey(e)
     if e.isAltDown and tes3.mobilePlayer then
-        tes3.messageBox("Test function ran!")
-
+        common.debug("Blight Level: " .. common.getBlightLevel(tes3.player.cell))
         common.debug("Blight Chance: " .. common.calculateBlightChance(tes3.player))
     end
 end
-event.register("keyDown", loadTestCell, {filter=tes3.scanCode.d})
+event.register("keyDown", debugKey, {filter=tes3.scanCode.z})
