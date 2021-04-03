@@ -38,6 +38,8 @@ event.register("initialized", initialized)
 local function loadTestCell(e)
     if e.isAltDown and tes3.mobilePlayer then
         tes3.messageBox("Test function ran!")
+
+        common.debug("Blight Chance: " .. common.calculateBlightChance(tes3.player))
     end
 end
 event.register("keyDown", loadTestCell, {filter=tes3.scanCode.d})

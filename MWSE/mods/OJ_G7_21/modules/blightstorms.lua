@@ -1,5 +1,7 @@
 local common = require("OJ_G7_21.common")
 
+
+
 event.register("cellChanged", function(e)
     if (e.cell.isInterior == true and e.cell.behavesAsExterior ~= true) then
         return
@@ -10,7 +12,7 @@ event.register("cellChanged", function(e)
     end
 
     -- Only proc if chance is met.
-    if (math.random(0, 100) > 5) then
+    if (math.random(0, 100) > common.calculateBlightChance(tes3.player)) then
         return
     end
 
