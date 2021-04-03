@@ -16,15 +16,13 @@ event.register("cellChanged", function(e)
     tes3.setGlobal("TB_IsInExternalCell", 1)
 
     -- Only proc if chance is met.
-    if (math.random(0, 100) > common.calculateBlightChance(tes3.player)) then
+    if common.calculateChanceResult(common.calculateBlightChance(tes3.player)) == false then
         return
     end
 
     common.debug("Player is contracting blight from blightstorm.")
 
-    event.trigger("blight:TriggerDisease", {
-        reference = tes3.player,
-        displayMessage = true,
-        message = "You have contracted %s."
+    event.trigger("blight:TriggerBlight", {
+        reference = tes3.player
     })
 end)

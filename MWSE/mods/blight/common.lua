@@ -21,6 +21,10 @@ function common.getKeyFromValueFunc(tbl, func)
     return nil
 end
 
+function common.calculateChanceResult(chance)
+    return math.random(0, 100) <= chance
+end
+
 function common.iterBlightDiseases(reference)
     return coroutine.wrap(function()
         for _, spell in pairs(reference.object.spells.iterator) do
