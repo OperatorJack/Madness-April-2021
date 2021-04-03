@@ -19,14 +19,15 @@ local common = require("OJ_G7_21.common")
 require("OJ_G7_21.modules.diseases")
 require("OJ_G7_21.modules.traps")
 require("OJ_G7_21.modules.blightstorms")
+require("OJ_G7_21.modules.blight-progression")
 
 local function initialized()
     for object in tes3.iterateObjects({tes3.objectType.spell}) do
         if (object.castType == tes3.spellType.blight) then
             if object.id ~= "corprus" then
-                table.insert(common.diseases, {
+                common.diseases[object.id] = {
                     id = object.id
-                })
+                }
             end
         end
     end

@@ -21,6 +21,15 @@ function common.getKeyFromValueFunc(tbl, func)
     return nil
 end
 
+function common.hasBlight(reference)
+    for _, spell in pairs(reference.object.spells) do
+        if (common.diseases[spell.id]) then
+            return true
+        end
+    end
+    return false
+end
+
 function common.calculateBlightChance(reference)
     local chance = 10 --Base Chance
 

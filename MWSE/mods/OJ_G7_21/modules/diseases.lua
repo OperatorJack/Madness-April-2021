@@ -1,7 +1,7 @@
 local common = require("OJ_G7_21.common")
 
 local function getRandomDisease()
-    return tes3.getObject(common.diseases[math.random(0, #common.diseases)].id)
+    return tes3.getObject(table.choice(common.diseases).id)
 end
 
 event.register("OJ_G7_21:TriggerDisease", function(e)
