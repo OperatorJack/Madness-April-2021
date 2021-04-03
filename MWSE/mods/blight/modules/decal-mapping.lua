@@ -56,23 +56,39 @@ local function removeBlightDecal(e)
     -- TODO
 end
 
-
+local blacklist = {
+    [tes3.activeBodyPart.groin] = true,
+    [tes3.activeBodyPart.weapon] = true,
+    [tes3.activeBodyPart.shield] = true,
+    [tes3.activeBodyPart.leftPauldron] = true,
+    [tes3.activeBodyPart.rightPauldron] = true,
+    [tes3.activeBodyPart.hair] = true,
+}
 event.register("bodyPartAssigned", function(e)
-    if (e.reference and 
-        not e.object and -- Skin Only
-        common.hasBlight(e.reference)) then
+    -- bail if an object assigned to this bodypart
+    if e.object ~= nil then return end
 
-        for node in traverseNIF({ e.bodyPart.sceneNode }) do
+    -- ignore hair, groin, etc.
+    if blacklist[e.index] then return end
+
+    if not common.hasBlight(e.reference) then return end
+
+    timer.delayOneFrame(function()
+        local sceneNode = e.manager:getActiveBodyPartNode(tes3.activeBodyPartLayer.base, e.index);
+        if not sceneNode then return end
+
+        for node in traverseNIF({ sceneNode }) do
             local success, texturingProperty, alphaProperty = pcall(function() return node:getProperty(0x4), node:getProperty(0x0) end)
             if (success and texturingProperty and not alphaProperty) then
-                 local map, index = texturingProperty:addDecalMap(texture)
+                    local map, index = texturingProperty:addDecalMap(texture)
                 if (map) then
                     common.debug("Added decal to '%s' (%s) at index %d", node.name, node.RTTI.name, index)
-                    managedReferences[e.reference] = true 
+                    managedReferences[e.reference] = true
                 end
             end
         end
-    end
+
+    end)
 end)
 
 event.register("referenceActivated", function(e)
