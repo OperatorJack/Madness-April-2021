@@ -33,21 +33,20 @@ local function onLoaded()
                         common.debug("Processing progression for " .. spell.name)
 
                         local progression = progressions[spell.id]
-                        progression.days = tes3.worldController.daysPassed.value - progression.lastDay
+                        progression.days = progression.days + tes3.worldController.daysPassed.value - progression.lastDay
                         progression.lastDay = tes3.worldController.daysPassed.value
 
-                        common.debug(json.encode(progression, { indent = true }))
+                        --common.debug(json.encode(progression, { indent = true }))
 
                         if (progression.days >= progression.nextProgession) then
-                            common.debug("Progressing for " .. spell.name)
+                            --common.debug("Progressing for " .. spell.name)
 
                             progression.progression = progression.progression + 1
                             progression.nextProgession = math.random(2, 8)
+                            progression.days = 0
 
                             local progressionSpellId = spell.id .. "_P"
                             local progressionSpell = tes3.getObject(progressionSpellId) or tes3spell.create(progressionSpellId, "Infectious " .. spell.name)
-
-                            common.debug("Made ID " .. progressionSpellId)
 
                             progressionSpell.name = "Infectious " .. spell.name
 
