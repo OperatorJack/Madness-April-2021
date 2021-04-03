@@ -25,9 +25,11 @@ require("OJ_G7_21.modules.blightstorms")
 local function initialized()
     for object in tes3.iterateObjects({tes3.objectType.spell}) do
         if (object.castType == tes3.spellType.blight) then
-            table.insert(common.diseases, {
-                id = object.id
-            })
+            if object.id ~= "corprus" then
+                table.insert(common.diseases, {
+                    id = object.id
+                })
+            end
         end
     end
 
