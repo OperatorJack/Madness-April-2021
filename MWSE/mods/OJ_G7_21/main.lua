@@ -17,10 +17,20 @@ end
 
 
 
+local common = require("OJ_G7_21.common")
 require("OJ_G7_21.modules.diseases")
 require("OJ_G7_21.modules.traps")
+require("OJ_G7_21.modules.blightstorms")
 
 local function initialized()
+    for object in tes3.iterateObjects({tes3.objectType.spell}) do
+        if (object.castType == tes3.spellType.blight) then
+            table.insert(common.diseases, {
+                id = object.id
+            })
+        end
+    end
+
     print("[" .. modname .. ": INFO] Initialized")
 end
 event.register("initialized", initialized)

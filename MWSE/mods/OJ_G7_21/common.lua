@@ -20,23 +20,12 @@ function common.getKeyFromValueFunc(tbl, func)
 end
 
 
+
 common.diseases = {
-    {
-        id = "OJ_G7_21_DiseaseTrapTest1"
-    },
-    {
-        id = "OJ_G7_21_DiseaseTrapTest2"
-    }
+    --Empty, loaded at runtime.
 }
 
 common.traps = {
-    -- On a timer, checks proximity to player and triggers trap.
-    timer = {
-        ["OJ_G7_21_TrapTimerStaticTest"] = {
-            animate = true,
-            proximity = 256
-        }
-    },
     -- Constantly checks proximity to player and triggers trap.
     proximity = {
         ["OJ_G7_21_TrapProxStaticTest"] = {

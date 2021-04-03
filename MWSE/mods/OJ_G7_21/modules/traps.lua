@@ -1,4 +1,4 @@
-local common = require("TheVoloptuousVelks-MMM2020.common")
+local common = require("OJ_G7_21.common")
 
 local function isTrapTriggered(trap)
     return trap.data.OJ_G7_21 ~= nil and trap.data.OJ_G7_21.triggered == true
