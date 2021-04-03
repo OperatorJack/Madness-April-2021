@@ -28,11 +28,11 @@ end
 function common.iterBlightDiseases(reference)
     return coroutine.wrap(function()
         -- special handling for containers
-        if  reference.object.organic and 
-            reference.data.blight and 
-            reference.data.blight.diseases then
-            for spell in pairs(reference.data.blight.diseases) do
-                coroutine.yield(tes3.getObject(spell))
+        if reference.object.organic then
+            if reference.data.blight and reference.data.blight.diseases then
+                for spell in pairs(reference.data.blight.diseases) do
+                    coroutine.yield(tes3.getObject(spell))
+                end
             end
             return
         end
@@ -108,7 +108,7 @@ function common.addBlight(reference, spellId)
         mwscript.addSpell({
             reference = reference,
             spell = spellId
-        })      
+        })
     end
 
     event.trigger("blight:AddedBlight", {
@@ -126,7 +126,7 @@ function common.removeBlight(reference, spellId)
         mwscript.removeSpell({
             reference = reference,
             spell = spellId
-        })      
+        })
     end
 
     event.trigger("blight:RemovedBlight", {
