@@ -14,20 +14,6 @@ local decalTextures = {
     ["textures\\blight\\decal_blight2.dds"] = true,
 }
 
-local function traverse(roots)
-    local function iter(nodes)
-        for i, node in ipairs(nodes or roots) do
-            if node then
-                coroutine.yield(node)
-                if node.children then
-                    iter(node.children)
-                end
-            end
-        end
-    end
-    return coroutine.wrap(iter)
-end
-
 local function iterBlightDecals(texturingProperty)
     local function iter()
         for i, map in ipairs(texturingProperty.maps) do
@@ -46,26 +32,26 @@ local function hasBlightDecal(texturingProperty)
 end
 
 local function addBlightDecal(sceneNode)
-    for node in traverse{sceneNode} do
+    for node in common.traverse{sceneNode} do
         local success, texturingProperty, alphaProperty = pcall(function()
             return node:getProperty(0x4), node:getProperty(0x0)
         end)
         if success and texturingProperty and not alphaProperty then
             if texturingProperty.canAddDecal and not hasBlightDecal(texturingProperty) then
-                map, i = texturingProperty:addDecalMap(table.choice(decalTextures))
-                common.debug("Added blight decal to %s at %s", node.name, i)
+                texturingProperty:addDecalMap(table.choice(decalTextures))
+                common.debug("  Added blight decal to %s", node.name)
             end
         end
     end
 end
 
 local function removeBlightDecal(sceneNode)
-    for node in traverse{sceneNode} do
+    for node in common.traverse{sceneNode} do
         local texturingProperty = node:getProperty(0x4)
         if texturingProperty then
             for i in iterBlightDecals(texturingProperty) do
                 texturingProperty:removeDecalMap(i)
-                common.debug("Removed blight decal from %s at %s", node.name, i)
+                common.debug("  Removed blight decal from %s", node.name)
             end
         end
     end
@@ -94,25 +80,21 @@ event.register("bodyPartAssigned", function(e)
     end)
 end)
 
-event.register("referenceActivated", function(e)
-    if e.reference.object.organic then
-        if common.hasBlight(e.reference) then
-            if e.reference.sceneNode ~= e.reference.baseObject.sceneNode then
-                addBlightDecal(e.reference.sceneNode)
-            end
-        end
-    end
-end)
-
 event.register("loaded", function(e)
     tes3.player:updateEquipment()
 end)
 
-event.register("blight:AddedBlight", function(e)
+event.register("referenceSceneNodeCreated", function(e)
     if e.reference.object.organic then
-        if e.reference.sceneNode ~= e.reference.baseObject.sceneNode then
+        if common.hasBlight(e.reference) then
             addBlightDecal(e.reference.sceneNode)
         end
+    end
+end)
+
+event.register("blight:AddedBlight", function(e)
+    if e.reference.object.organic then
+        addBlightDecal(e.reference.sceneNode)
     else
         e.reference:updateEquipment()
     end
