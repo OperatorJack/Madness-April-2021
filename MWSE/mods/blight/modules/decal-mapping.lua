@@ -33,18 +33,36 @@ local function traverse(roots)
     return coroutine.wrap(iter)
 end
 
+local function iterBlightDecals(texturingProperty)
+    if texturingProperty == nil then return end
+
+    local function iter()
+        for i, map in ipairs(texturingProperty.maps) do
+            local tex = map and map.texture
+            local id = tex and tex.fileName
+            if decalTextures[id] then
+                coroutine.yield(i, map)
+            end
+        end
+    end
+
+    return coroutine.wrap(iter)
+end
+
+local function hasBlightDecal(texturingProperty)
+    return iterBlightDecals(texturingProperty)()
+end
+
 local function addBlightDecal(sceneNode)
     for node in traverse{sceneNode} do
         local success, texturingProperty, alphaProperty = pcall(function()
             return node:getProperty(0x4), node:getProperty(0x0)
         end)
         if success and texturingProperty and not alphaProperty then
-            if texturingProperty.canAddDecal then
+            if texturingProperty.canAddDecal and not hasBlightDecal(texturingProperty) then
                 local texture = table.choice(decalTextures)
-                local map, index = texturingProperty:addDecalMap(texture)
-                if map then
-                    common.debug("Added decal to '%s' at index %d", node.name, index)
-                end
+                texturingProperty:addDecalMap(texture)
+                common.debug("Added blight decal to %s", node.name)
             end
         end
     end
@@ -52,14 +70,10 @@ end
 
 local function removeBlightDecal(sceneNode)
     for node in traverse{sceneNode} do
-        pcall(function()
-            local texturingProperty = node:getProperty(0x4)
-            for i, map in ipairs(texturingProperty.maps) do
-                if decalTextures[map.texture.fileName] then
-                    texturingProperty:removeDecalMap(i)
-                end
-            end
-        end)
+        local texturingProperty = node:getProperty(0x4)
+        for i in iterBlightDecals(texturingProperty) do
+            texturingProperty:removeDecalMap(i)
+        end
     end
 end
 
