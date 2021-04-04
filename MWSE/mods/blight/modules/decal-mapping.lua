@@ -34,8 +34,6 @@ local function traverse(roots)
 end
 
 local function iterBlightDecals(texturingProperty)
-    if texturingProperty == nil then return end
-
     local function iter()
         for i, map in ipairs(texturingProperty.maps) do
             local tex = map and map.texture
@@ -45,7 +43,6 @@ local function iterBlightDecals(texturingProperty)
             end
         end
     end
-
     return coroutine.wrap(iter)
 end
 
@@ -61,8 +58,8 @@ local function addBlightDecal(sceneNode)
         if success and texturingProperty and not alphaProperty then
             if texturingProperty.canAddDecal and not hasBlightDecal(texturingProperty) then
                 local texture = table.choice(decalTextures)
-                texturingProperty:addDecalMap(texture)
-                common.debug("Added blight decal to %s", node.name)
+                _, i = texturingProperty:addDecalMap(texture)
+                common.debug("Added blight decal to %s at %s", node.name, i)
             end
         end
     end
@@ -71,8 +68,11 @@ end
 local function removeBlightDecal(sceneNode)
     for node in traverse{sceneNode} do
         local texturingProperty = node:getProperty(0x4)
-        for i in iterBlightDecals(texturingProperty) do
-            texturingProperty:removeDecalMap(i)
+        if texturingProperty then
+            for i in iterBlightDecals(texturingProperty) do
+                common.debug("Removed blight decal from %s at %s", node.name, i)
+                texturingProperty:removeDecalMap(i)
+            end
         end
     end
 end
@@ -107,16 +107,12 @@ event.register("loaded", function(e)
 end)
 
 event.register("blight:AddedBlight", function(e)
-    if (e.reference.object.organic) then
+    if e.reference.object.organic then
         addBlightDecal(e.reference.sceneNode)
     else
         e.reference:updateEquipment()
     end
 end)
 event.register("blight:RemovedBlight", function(e)
-    if (e.reference.object.organic) then
-        removeBlightDecal(e.reference.sceneNode)
-    else
-        e.reference:updateEquipment()
-    end
+    removeBlightDecal(e.reference.sceneNode)
 end)
