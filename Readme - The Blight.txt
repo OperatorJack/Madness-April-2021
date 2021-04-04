@@ -75,6 +75,8 @@
 
  - Support for all vanilla and mod added Blight diseases.
 
+ - Entities which are blighted will now say "(Blighted)" in their tooltip.
+
 
 =====================================================================================
  INSTALLATION:
