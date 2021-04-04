@@ -17,9 +17,9 @@ local decalTextures = {
 local function iterBlightDecals(texturingProperty)
     local function iter()
         for i, map in ipairs(texturingProperty.maps) do
-            local tex = map and map.texture
-            local id = tex and tex.fileName
-            if decalTextures[id] then
+            local texture = map and map.texture
+            local fileName = texture and texture.fileName
+            if decalTextures[fileName] then
                 coroutine.yield(i, map)
             end
         end
@@ -38,6 +38,8 @@ local function addBlightDecal(sceneNode)
         end)
         if success and texturingProperty and not alphaProperty then
             if texturingProperty.canAddDecal and not hasBlightDecal(texturingProperty) then
+                local texturingProperty = node:detachProperty(0x4):clone()
+                node:attachProperty(texturingProperty)
                 texturingProperty:addDecalMap(table.choice(decalTextures))
                 common.debug("  Added blight decal to %s", node.name)
             end
@@ -84,7 +86,7 @@ event.register("loaded", function(e)
     tes3.player:updateEquipment()
 end)
 
-event.register("referenceSceneNodeCreated", function(e)
+event.register("referenceActivated", function(e)
     if e.reference.object.organic then
         if common.hasBlight(e.reference) then
             addBlightDecal(e.reference.sceneNode)
