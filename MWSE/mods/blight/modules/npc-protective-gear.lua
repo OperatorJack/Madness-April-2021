@@ -9,7 +9,7 @@ local gear = {
 local function iterNPCs(func)
     for _, cell in pairs(tes3.getActiveCells()) do
         for reference in cell:iterateReferences() do
-            if (reference.object.objectType == tes3.objectType.npc) then
+            if (reference.object.objectType == tes3.objectType.npc and reference.mobile) then
                 func(reference)
             end
         end
@@ -17,6 +17,13 @@ local function iterNPCs(func)
 end
 
 local function hasGear(reference)
+    for _, stack in pairs(reference.object.inventory) do
+        local object = stack.object
+		if gear[object.id] then
+            return object.id
+        end
+	end
+
     for _, stack in pairs(reference.object.equipment) do
         local object = stack.object
 		if gear[object.id] then
@@ -30,7 +37,10 @@ local function equipGear()
         local item = hasGear(ref)
         if not item then return end
 
-        ref.mobile:equip(item)
+        mwscript.equip({
+            reference = ref,
+            item = item
+        })
         common.debug("Equipping %s on %s.", item, ref)
     end)
 end
