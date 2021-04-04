@@ -26,97 +26,79 @@
  ABOUT THIS MOD:
 =====================================================================================
 
- This mod causes significantly expands on how Blight diseases work, changing how
- Redoran settlements near Red Mountain deal with the Blight and how the Player must
- deal with them.
+This mod significantly expands on how blight diseases work, changing how Redoran
+settlements near Red Mountain deal with the blight and how the Player must deal with them.
 
- Features:
- - Blight diseases now have a visible effect on the infected entity. The Player, NPCs,
- and flora will now have a special blight effect dynamically applied and removed
- as they become infected and are cured. For humanoids, the effect is only applied to
- their skin.
+Features:
+- Blight diseases now apply custom visuals to those afflicted. The Player, NPCs,
+and flora will have a special blight effect dynamically applied and removed
+as they become infected or cured.
 
- - Flora can contract and harbor blight diseases.
+- Disease progression now causes blight diseases to grow in severity if left unchecked.
+Whenever you contract a blight disease, you have between 2-3 days to cure it. If you do
+not, it will progress and you will become more sick. This will continue forever, so
+make sure to carry some cure blight disease potions!
 
- - Active Transmission of Blight diseases between the Player, NPCs, and flora. No longer
- can you haphazardly talk to people or scavenge for ingrediants outside of Ald-Ruhn.
- Talking to people and gathering herbs have a chance of transmitting Blight diseases
- between both parties. You can transmit to NPCs and flora, and they can transmit to
- you. Watch out for those infectious trama roots...
+- Active transmission of blight diseases between actors or objects. Talking
+to infected characters or gathering infected herbs can result in transmitting the
+diseases between either party. Watch out for those infectious trauma roots...
 
- - Passive Tranmission of Blight diseases amongst NPCs, creatures and flora. The closer
- to Red Mountain that the transmission occurs, the higher chance of contracting a
- Blight disease. These diseases are automatically cured and removed over a random
- interval, preventing them from stacking too high and representing those NPCs
- and flora being cured.
+- Passive transmission of blight diseases within blighted zones. Actors and flora
+located in cells with blight storms, or cells neighboring those, have a chance of
+passively catching blight diseases. This chance decreases based on the distance from
+Red Mountain.
 
- - Disease progression now causes Blight diseases to grow more infectious if left
- unchecked. Whenever you contract a Blight disease, you can between 2-3 days to cure
- it. If you do not, it will progress and you will become more sick. This will continue
- forever, so make sure to carry some cure blight disease potions! Additionally, this
- works across multiple diseases at once. Don't think that just because once disease
- progressed, another cannot.
+- Face coverage is taken into account when transmitting blight diseases. Actors with
+face shielding will have a lower chance of contracting a blight disease than those
+without. Wear a mask! The more coverage, the better protected you will be.
 
-- 3 new mouth covering scarves, created by Axeljk, Melchior Dahrk, and Greatness7!
+- NPCs will now have and wear the face protection during ash and blight storms to
+protect themselves. To get face protection, the NPC must be within the infection
+range of Red Mountain. Wealthier NPCs have a higher chance of getting face protection.
+NPCs will equip their face protection during storms and remove them afterwards.
 
- - Face coverage is taken into account when transmitting the Blight. Actors with
- face shielding will have a lower chance of contracting a Blight disease than those
- without. Weak your mask! The more coverage, the better protected you will be.
-
- - NPCs will now have and wear the new face protection during Ash and Blight storms to
- protect themselves. To get face protection, the NPC must be within the infection
- range of Red Mountain. Wealthier NPCs have a higher chance of getting face protection.
- NPCs will equip their face protection during storms and remove them afterwards.
-
- - Blight storms can transmit the Blight to the Player.
-
- - Services are now restricted during Blight storms. Why would someone take you on a
- Silt Strider journey during a horrid Blight storm?
-
- - Support for all vanilla and mod added Blight diseases.
-
- - Entities which are blighted will now say "(Blighted)" in their tooltip.
-
+- Services are now restricted during Blight storms. Why would someone take you on a
+Silt Strider journey during a horrid Blight storm?
 
 =====================================================================================
  INSTALLATION:
 =====================================================================================
 
- Extract the archive into your Morrowind installation directory. Enable the ESP file
- in your mod manager of choice.
+Extract the archive into your Morrowind installation directory. Enable the ESP file
+in your mod manager of choice.
 
 =====================================================================================
  KNOWN ISSUES OR BUGS:
 =====================================================================================
 
- None. Please report any issues on the Nexus page using the Bug Tracker.
+None. Please report any issues on the Nexus page using the Bug Tracker.
 
 
 =====================================================================================
  CREDITS & USAGE:
 =====================================================================================
 
- Special thanks to DarkElfGuy and Danae  for inspiring people to create and release mods for
- the yearly modathon, as well as the many other events they prepare and host.
+Special thanks to DarkElfGuy and Danae  for inspiring people to create and release mods for
+the yearly modathon, as well as the many other events they prepare and host.
 
- Thank you to Leyawynn for the blight decal textures.
- Thanks Axeljk, Melchior Dahrk for the basis of the neckwraps Greatness7 made.
+Thank you to Leyawynn for the blight decal textures.
+Thanks Axeljk, Melchior Dahrk for the basis of the neckwraps Greatness7 made.
 
- Copyright 2020 Greatness7 and OperatorJack
+Copyright 2020 Greatness7 and OperatorJack
 
- Permission is hereby granted, free of charge, to any person obtaining a copy of
- this software and associated documentation files (the "Software"), to deal in the
- Software without restriction, including without limitation the rights to use, copy,
- modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
- and to permit persons to whom the Software is furnished to do so, subject to the
- following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in the
+Software without restriction, including without limitation the rights to use, copy,
+modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
 
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
- FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
- AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
