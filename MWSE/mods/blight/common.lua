@@ -159,21 +159,4 @@ common.diseases = {
     --Empty, loaded at runtime.
 }
 
-common.traps = {
-    -- Constantly checks proximity to player and triggers trap.
-    proximity = {
-        ["blight_TrapProxStaticTest"] = {
-            animate = true,
-            proximity = 256,
-            diseaseId = "VV20_DiseaseTrapTest3"
-        }
-    },
-    -- Triggers trap on collision with player.
-    collision = {
-        ["blight_TrapCollStaticTest"] = {
-            animate = true
-        }
-    }
-}
-
 return common
