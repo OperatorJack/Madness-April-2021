@@ -23,6 +23,7 @@ require("blight.modules.blight-progression")
 require("blight.modules.active-transmission")
 require("blight.modules.passive-transmission")
 require("blight.modules.decal-mapping")
+require("blight.modules.npc-protective-gear")
 
 local function initialized()
     for object in tes3.iterateObjects({tes3.objectType.spell}) do

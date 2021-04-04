@@ -93,14 +93,14 @@ event.register("loaded", function(e)
 end)
 
 event.register("blight:AddedBlight", function(e)
-    if (e.reference.object.object.organic) then
+    if (e.reference.object.organic) then
         addBlightDecal(e.reference.sceneNode)
     else
         e.reference:updateEquipment()
     end
 end)
 event.register("blight:RemovedBlight", function(e)
-    if (e.reference.object.object.organic) then
+    if (e.reference.object.organic) then
         removeBlightDecal(e.reference.sceneNode)
     else
         e.reference:updateEquipment()
