@@ -1,7 +1,7 @@
 local modname = "Blight"
 local common = {}
 
-local debugMode = true
+local debugMode = false
 local prepend = '[' .. modname .. ': DEBUG] '
 
 common.getBlightLevel = require("blight.modules.get-blight-level")
