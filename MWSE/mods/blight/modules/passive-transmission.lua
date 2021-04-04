@@ -26,7 +26,7 @@ local function onRefCreated(e)
     if data.blight.lastEncounter ~= daysPassed then
         data.blight.lastEncounter = daysPassed
     else
-        common.debug("%s already encountered today (passive transmission disabled)", e.reference)
+        -- common.debug("%s already encountered today (passive transmission disabled)", e.reference)
         return
     end
 
