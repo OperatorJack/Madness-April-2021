@@ -97,7 +97,9 @@ end)
 event.register("referenceActivated", function(e)
     if e.reference.object.organic then
         if common.hasBlight(e.reference) then
-            addBlightDecal(e.reference.sceneNode)
+            if e.reference.sceneNode ~= e.reference.baseObject.sceneNode then
+                addBlightDecal(e.reference.sceneNode)
+            end
         end
     end
 end)
@@ -108,7 +110,9 @@ end)
 
 event.register("blight:AddedBlight", function(e)
     if e.reference.object.organic then
-        addBlightDecal(e.reference.sceneNode)
+        if e.reference.sceneNode ~= e.reference.baseObject.sceneNode then
+            addBlightDecal(e.reference.sceneNode)
+        end
     else
         e.reference:updateEquipment()
     end
