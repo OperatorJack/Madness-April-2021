@@ -10,8 +10,8 @@ local bodyPartBlacklist = {
 }
 
 local decalTextures = {
-    ["textures\\blight\\decal_blight1.dds"] = true,
-    ["textures\\blight\\decal_blight2.dds"] = true,
+    ["textures\\tb\\decal_blight1.dds"] = true,
+    ["textures\\tb\\decal_blight2.dds"] = true,
 }
 
 --
