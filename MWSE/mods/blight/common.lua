@@ -4,7 +4,7 @@ local common = {}
 local debugMode = true
 local prepend = '[' .. modname .. ': DEBUG] '
 
-common.getBlightLevel = require("blight.modules.getBlightLevel")
+common.getBlightLevel = require("blight.modules.get-blight-level")
 
 function common.debug(str, ...)
     if (debugMode == true) then
