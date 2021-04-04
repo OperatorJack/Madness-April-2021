@@ -16,41 +16,29 @@ local function iterNPCs(func)
     end
 end
 
-local function hasGear(reference)
-    for _, stack in pairs(reference.object.inventory) do
-        local object = stack.object
-		if gear[object.id] then
-            return object.id
-        end
-	end
-
-    for _, stack in pairs(reference.object.equipment) do
-        local object = stack.object
-		if gear[object.id] then
-            return object.id
-        end
-	end
-end
-
 local function equipGear()
     iterNPCs(function(ref)
-        local item = hasGear(ref)
-        if not item then return end
-
-        mwscript.equip({
-            reference = ref,
-            item = item
-        })
-        common.debug("Equipping %s on %s.", item, ref)
+        for _, stack in pairs(ref.object.inventory) do
+            local object = stack.object
+            if gear[object.id] then
+                ref.mobile:equip({item = object.id})
+                common.debug("Equipping %s on %s.", object.id, ref)
+                return
+            end
+        end
     end)
 end
 
 local function unequipGear()
     iterNPCs(function(ref)
-        local item = hasGear(ref)
-        if not item then return end
-
-        ref.mobile:unequip(item)
+        for _, stack in pairs(ref.object.equipment) do
+            local object = stack.object
+            if gear[object.id] then
+                ref.mobile:unequip({item = object.id})
+                common.debug("Unequipping %s on %s.", object.id, ref)
+                return
+            end
+        end
     end)
 end
 
