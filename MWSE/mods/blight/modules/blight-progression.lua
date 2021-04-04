@@ -1,11 +1,8 @@
 local common = require("blight.common")
 
 event.register("spellResist", function(e)
-    debug.log(e.eventType)
-    debug.log(e.effectInstance.effectId)
-
     -- only interested in cure blight effect
-    if e.effectInstance.effectId ~= tes3.effect.cureBlightDisease then
+    if e.effect.id ~= tes3.effect.cureBlightDisease then
         return
     end
 
@@ -14,6 +11,7 @@ event.register("spellResist", function(e)
         e.target.data.blight.blightProgession = {}
     end
 
+    -- trigger decal removal / etc
     event.trigger("blight:RemovedBlight", { reference = e.target })
 end)
 
