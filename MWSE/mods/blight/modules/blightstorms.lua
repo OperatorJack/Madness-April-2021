@@ -1,7 +1,5 @@
 local common = require("blight.common")
 
-
-
 event.register("cellChanged", function(e)
     if (e.cell.isInterior == true and e.cell.behavesAsExterior ~= true) then
         tes3.setGlobal("TB_IsInExternalCell", 0)

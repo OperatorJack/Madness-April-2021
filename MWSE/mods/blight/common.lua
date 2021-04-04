@@ -96,7 +96,6 @@ function common.calculateBlightChance(reference)
     return chance
 end
 
-
 function common.hasBlight(reference, searchSpell)
     for spell in common.iterBlightDiseases(reference) do
         if searchSpell and searchSpell.id == spell.id or not searchSpell then
