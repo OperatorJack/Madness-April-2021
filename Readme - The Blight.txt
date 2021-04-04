@@ -57,7 +57,7 @@
  works across multiple diseases at once. Don't think that just because once disease
  progressed, another cannot.
 
-- 3 new mouth covering scarves, created by Greatness7!
+- 3 new mouth covering scarves, created by Axeljk, Melchior Dahrk, and Greatness7!
 
  - Face coverage is taken into account when transmitting the Blight. Actors with
  face shielding will have a lower chance of contracting a Blight disease than those
@@ -100,6 +100,7 @@
  the yearly modathon, as well as the many other events they prepare and host.
 
  Thank you to Leyawynn for the blight decal textures.
+ Thanks Axeljk, Melchior Dahrk for the basis of the neckwraps Greatness7 made.
 
  Copyright 2020 Greatness7 and OperatorJack
 
