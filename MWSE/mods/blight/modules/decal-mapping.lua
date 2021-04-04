@@ -92,5 +92,17 @@ event.register("loaded", function(e)
     tes3.player:updateEquipment()
 end)
 
-event.register("blight:AddedBlight", addBlightDecal)
-event.register("blight:RemovedBlight", removeBlightDecal)
+event.register("blight:AddedBlight", function(e)
+    if (e.reference.object.object.organic) then
+        addBlightDecal(e.reference.sceneNode)
+    else
+        e.reference:updateEquipment()
+    end
+end)
+event.register("blight:RemovedBlight", function(e)
+    if (e.reference.object.object.organic) then
+        removeBlightDecal(e.reference.sceneNode)
+    else
+        e.reference:updateEquipment()
+    end
+end)
