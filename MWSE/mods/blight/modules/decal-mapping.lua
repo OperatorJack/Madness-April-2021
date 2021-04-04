@@ -13,11 +13,6 @@ local decalTextures = {
     ["textures\\blight\\decal_blight1.dds"] = true,
     ["textures\\blight\\decal_blight2.dds"] = true,
 }
-event.register("initialized", function()
-    for k, v in pairs(decalTextures) do
-        decalTextures[k] = niSourceTexture.createFromPath(k)
-    end
-end)
 
 local function traverse(roots)
     local function iter(nodes)
@@ -76,6 +71,12 @@ local function removeBlightDecal(sceneNode)
     end
 end
 
+event.register("initialized", function()
+    for k, v in pairs(decalTextures) do
+        decalTextures[k] = niSourceTexture.createFromPath(k)
+    end
+end)
+
 event.register("bodyPartAssigned", function(e)
     -- ignore covered slots
     if e.object ~= nil then return end
@@ -112,6 +113,7 @@ event.register("blight:AddedBlight", function(e)
         e.reference:updateEquipment()
     end
 end)
+
 event.register("blight:RemovedBlight", function(e)
     removeBlightDecal(e.reference.sceneNode)
 end)
