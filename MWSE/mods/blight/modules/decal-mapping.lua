@@ -57,8 +57,7 @@ local function addBlightDecal(sceneNode)
         end)
         if success and texturingProperty and not alphaProperty then
             if texturingProperty.canAddDecal and not hasBlightDecal(texturingProperty) then
-                local texture = table.choice(decalTextures)
-                _, i = texturingProperty:addDecalMap(texture)
+                map, i = texturingProperty:addDecalMap(table.choice(decalTextures))
                 common.debug("Added blight decal to %s at %s", node.name, i)
             end
         end
@@ -70,8 +69,8 @@ local function removeBlightDecal(sceneNode)
         local texturingProperty = node:getProperty(0x4)
         if texturingProperty then
             for i in iterBlightDecals(texturingProperty) do
-                common.debug("Removed blight decal from %s at %s", node.name, i)
                 texturingProperty:removeDecalMap(i)
+                common.debug("Removed blight decal from %s at %s", node.name, i)
             end
         end
     end

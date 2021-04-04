@@ -11,12 +11,8 @@ event.register("spellResist", function(e)
         e.target.data.blight.blightProgession = {}
     end
 
-    -- yuck, seems to require waiting 2 frames...
-    timer.delayOneFrame(function()
-        timer.delayOneFrame(function()
-            event.trigger("blight:RemovedBlight", { reference = e.target })
-        end)
-    end)
+    -- trigger decal removal / etc
+    event.trigger("blight:RemovedBlight", { reference = e.target })
 end)
 
 local function onLoaded()
