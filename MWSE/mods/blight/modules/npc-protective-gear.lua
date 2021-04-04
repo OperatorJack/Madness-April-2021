@@ -96,12 +96,12 @@ event.register("referenceActivated", function(e)
 		end
 	end
 
-    local chance = 10
+    local chance = 60
 
     -- Rich people are more likely to wear protective gear.
     chance = chance + equipmentValue / 100
 
-    --if common.calculateChanceResult(chance) then
+    if common.calculateChanceResult(chance) then
         -- Winner, winner! NPC gets some gear.
         local item = table.choice(gear)
 
@@ -111,7 +111,7 @@ event.register("referenceActivated", function(e)
         })
 
         common.debug("Added %s to %s.", item, reference)
-    --end
+    end
 
 
     reference.data.blight = reference.data.blight or {}
