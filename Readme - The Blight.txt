@@ -27,8 +27,8 @@
 =====================================================================================
 
  This mod causes significantly expands on how Blight diseases work, changing how
- settlements near Red Mountain deal with the Blight and how the Player must deal
- with them.
+ Redoran settlements near Red Mountain deal with the Blight and how the Player must
+ deal with them.
 
  Features:
  - Blight diseases now have a visible effect on the infected entity. The Player, NPCs,
