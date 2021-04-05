@@ -83,6 +83,11 @@ function common.calculateBlightChance(reference)
 
     -- It's not a plant! Proceed normally.
 
+    -- Dead people can't get blight.
+    if (reference.mobile.isDead == true) then
+        return 0
+    end
+
     -- Modify based on helmet
     for _, stack in pairs(reference.object.equipment) do
         local object = stack.object
