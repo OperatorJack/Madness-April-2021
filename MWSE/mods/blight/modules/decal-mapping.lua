@@ -95,6 +95,7 @@ event.register("bodyPartAssigned", function(e)
             if common.hasBlight(e.reference) then
                 addBlightDecal(sceneNode)
             else
+                -- clear decal if it was inherited when cloning
                 removeBlightDecal(sceneNode)
             end
         end
@@ -105,6 +106,9 @@ event.register("referenceActivated", function(e)
     if e.reference.object.organic then
         if common.hasBlight(e.reference) then
             addBlightDecal(e.reference.sceneNode)
+        else
+            -- clear decal if it was inherited when cloning
+            removeBlightDecal(e.reference.sceneNode)
         end
     end
 end)
