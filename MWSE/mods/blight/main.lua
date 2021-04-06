@@ -1,3 +1,8 @@
+-- Register the mod config menu (using EasyMCM library).
+event.register("modConfigReady", function()
+    require("blight.mcm")
+end)
+
 local common = require("blight.common")
 
 require("blight.modules.diseases")

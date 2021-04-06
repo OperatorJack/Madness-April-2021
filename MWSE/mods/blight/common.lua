@@ -1,13 +1,14 @@
+local config = require("blight.config")
+
 local modname = "Blight"
 local common = {}
 
-local debugMode = true
 local prepend = '[' .. modname .. ': DEBUG] '
 
 common.getBlightLevel = require("blight.modules.get-blight-level")
 
 function common.debug(str, ...)
-    if (debugMode == true) then
+    if (config.debugMode == true) then
         str = prepend .. str
         mwse.log(str, ...)
         tes3.messageBox(str, ...)
