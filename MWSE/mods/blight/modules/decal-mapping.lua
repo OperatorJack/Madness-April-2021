@@ -37,18 +37,28 @@ end
 
 local function addBlightDecal(sceneNode)
     for node in common.traverse{sceneNode} do
-        local alphaProperty = node:getProperty(0x0)
-        local texturingProperty = node:getProperty(0x4)
-        if texturingProperty and not alphaProperty then
-            if texturingProperty.canAddDecal then
-                if not hasBlightDecal(texturingProperty) then
-                    local texturingProperty = node:detachProperty(0x4):clone()
-                    texturingProperty:addDecalMap(table.choice(decalTextures))
-                    node:attachProperty(texturingProperty)
-                    node:updateProperties()
-                    common.debug("Added blight decal to %s", node.name)
+        if node:isInstanceOfType(tes3.niType.NiTriShape) then
+            -- only interested in textured shapes without alpha
+            -- decals ontop of alpha masked areas will look bad
+            local alphaProperty = node:getProperty(0x0)
+            local texturingProperty = node:getProperty(0x4)
+            if texturingProperty and not alphaProperty then
+                -- also ignore properties with full decal slots
+                if texturingProperty.canAddDecal then
+                    -- also ignore if already have blight decal
+                    if not hasBlightDecal(texturingProperty) then
+                        -- we have to detach/clone the property
+                        -- because it could have multiple users
+                        local texturingProperty = node:detachProperty(0x4):clone()
+                        -- add the new decal map then attach it
+                        texturingProperty:addDecalMap(table.choice(decalTextures))
+                        node:attachProperty(texturingProperty)
+                        node:updateProperties()
+                        common.debug("Added blight decal to %s", node.name)
+                    end
                 end
             end
+
         end
     end
 end
