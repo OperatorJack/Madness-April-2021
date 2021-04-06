@@ -1,5 +1,46 @@
 local common = require("blight.common")
 
+local function getRecentCells()
+    -- ensure player.data.blight exists
+    local t = tes3.player.data
+    t.blight = t.blight or {}
+
+    -- ensure blight.recentCells exists
+    t.blight.recentCells = t.blight.recentCells or {}
+
+    -- now return the recentCells table
+    return t.blight.recentCells
+end
+
+-- Track cells via the `blight.recentCells` table
+-- We use this to process a cell only once per day
+local function onCellActivated(e)
+    local recentCells = getRecentCells()
+    local editorName = e.cell.editorName
+    local daysPassed = tes3.worldController.daysPassed.value
+    recentCells[editorName] = daysPassed
+end
+event.register("cellActivated", onCellActivated)
+
+-- Clean up the `blight.recentCells` table on save
+-- Just so we can keep save files nice and minimal
+local function onSave(e)
+    local daysPassed = tes3.worldController.daysPassed.value
+    local recentCells = getRecentCells()
+    for k, v in pairs(recentCells) do
+        if v ~= daysPassed then
+            recentCells[k] = nil
+        end
+    end
+end
+event.register("save", onSave)
+
+-- Helper function to get the day a cell was visited
+-- Will only return a value for recently visited cells
+local function getDayCellVisited(cell)
+    return getRecentCells()[cell.editorName]
+end
+
 local function onRefCreated(e)
     local object = e.reference.object
 
@@ -17,18 +58,16 @@ local function onRefCreated(e)
         return
     end
 
+    -- restrict passive transmission to once per day
+    local daysPassed = tes3.worldController.daysPassed.value
+    local lastVisitDay = getDayCellVisited(e.reference.cell)
+    if lastVisitDay == daysPassed then
+        return
+    end
+
     -- get reference blight data
     local data = e.reference.data
     data.blight = data.blight or {}
-
-    -- restrict passive transmission to once per day
-    local daysPassed = tes3.worldController.daysPassed.value
-    if data.blight.lastEncounter ~= daysPassed then
-        data.blight.lastEncounter = daysPassed
-    else
-        -- common.debug("%s already encountered today (passive transmission disabled)", e.reference)
-        return
-    end
 
     -- Check for expired blight diseases on reference, remove if expired.
     if data.blight.passiveTransmission then
