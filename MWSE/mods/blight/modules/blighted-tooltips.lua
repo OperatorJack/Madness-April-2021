@@ -19,7 +19,6 @@ local function onTooltipDrawn(e)
     local name = e.tooltip:findChild(tes3ui.registerID("HelpMenu_name"))
     if name and not name.text:lower():find("blight") then
         name.text = name.text .. " (Blighted)"
-
     end
 end
 event.register("uiObjectTooltip", onTooltipDrawn, {priority=100})
