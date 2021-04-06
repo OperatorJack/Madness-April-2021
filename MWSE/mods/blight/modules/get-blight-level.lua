@@ -1,41 +1,58 @@
 local blightedCells = {}
 
 local function getBlightedCells()
-    for i, cell in pairs(tes3.dataHandler.nonDynamicData.cells) do
+    for i, cell in ipairs(tes3.dataHandler.nonDynamicData.cells) do
         if cell.region and cell.region.weatherChanceBlight > 0 then
-            table.insert(blightedCells, {cell.gridX, cell.gridY})
+            table.insert(blightedCells, cell)
         end
     end
 end
-event.register("initialized", getBlightedCells)
+event.register("loaded", getBlightedCells)
 
-local function distance2d(p1, p2)
-    local dx = p1[1] - p2[1]
-    local dy = p1[2] - p2[2]
+local function gridDistance(c1, c2)
+    local dx = c1.gridX - c2.gridX
+    local dy = c1.gridY - c2.gridY
     return math.sqrt(dx * dx + dy * dy)
 end
 
+local function getAdjacentBlightCells(cell)
+    return coroutine.wrap(function()
+        for i, blightCell in ipairs(blightedCells) do
+            local dist = gridDistance(cell, blightCell)
+            if dist < 5 then
+                coroutine.yield(blightCell, dist)
+            end
+        end
+    end)
+end
+
+local function getAveragedBlightChance(cell)
+    local sum = cell.region.weatherChanceBlight
+    for blightCell, dist in getAdjacentBlightCells(cell) do
+        local chance = blightCell.region.weatherChanceBlight
+        local scaled = chance * (5 - dist)
+        sum = sum + scaled
+    end
+    return math.clamp(sum / 50, 0, 100)
+end
+
+-- Use a cache to make calling getBlightLevel from individual references fast.
+-- Clear cells from the cache when unloaded so mods can update blight chances.
+local blightLevelCache = {}
+event.register("cellDeactivated", function(e) blightLevelCache[e.cell] = nil end)
+
 -- Get the "Blight Level" of the given cell.
 -- Levels range 0 to 5. With 5 being the most-blighted areas.
--- The levels are calculated from the distance to the closest blighted region.
+-- Levels are calculated from the blight chances of surrounding cells.
 local function getBlightLevel(cell)
-    if not (cell and cell.region) then
-        return 0
-    elseif cell.region.weatherChanceBlight > 0 then
-        return 5
+    if not (cell and cell.region) then return 0 end
+
+    if blightLevelCache[cell] == nil then
+        local chance = getAveragedBlightChance(cell)
+        blightLevelCache[cell] = math.ceil(chance / 20)
     end
 
-    local min_dist = 5
-
-    local current_grid = {cell.gridX, cell.gridY}
-    for _, blight_grid in ipairs(blightedCells) do
-        local dist = math.floor(distance2d(current_grid, blight_grid))
-        if dist < min_dist then
-            min_dist = dist
-        end
-    end
-
-    return 5 - min_dist
+    return blightLevelCache[cell]
 end
 
 return getBlightLevel
