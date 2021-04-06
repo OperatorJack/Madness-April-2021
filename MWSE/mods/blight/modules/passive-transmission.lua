@@ -20,7 +20,7 @@ local function onCellExit(e)
     local editorName = e.cell.editorName
     local daysPassed = tes3.worldController.daysPassed.value
     recentCells[editorName] = daysPassed
-    common.debug("Leaving cell '%s' on day %s.", editorName, daysPassed)
+    -- common.debug("Leaving cell '%s' on day %s.", editorName, daysPassed)
 end
 event.register("cellDeactivated", onCellExit)
 
@@ -98,7 +98,7 @@ local function passiveTransmission(e)
         return
     end
 
-    common.debug("'%s' was loaded in a blighted cell on day %s.", e.reference, daysPassed)
+    common.debug("'%s' was loaded in a blighted cell of level %s on day %s.", e.reference, blightLevel, daysPassed)
     event.trigger("blight:TriggerBlight", {
         reference = e.reference,
         displayMessage = false,

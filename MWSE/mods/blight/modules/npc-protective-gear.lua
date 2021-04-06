@@ -106,7 +106,7 @@ local function distributeGear(e)
         mwscript.addItem({ reference = reference, item = item })
         common.debug("'%s' recieved gear '%s' (rolled %s vs %s).", reference, item, roll, chance)
     else
-        common.debug("'%s' failed recieve gear (rolled %s vs %s)", reference, roll, chance)
+        common.debug("'%s' failed to recieve gear (rolled %s vs %s)", reference, roll, chance)
     end
 
     reference.data.blight = reference.data.blight or {}

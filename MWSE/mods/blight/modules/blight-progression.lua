@@ -6,6 +6,8 @@ event.register("spellResist", function(e)
         return
     end
 
+    common.debug("'%s' has had their blight disease cured!", e.target)
+
     -- clear progression tracking data
     if (e.target == tes3.player) and e.target.data.blight then
         e.target.data.blight.blightProgession = {}
