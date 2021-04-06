@@ -1,20 +1,17 @@
 local common = require("blight.common")
 
 local function attemptTransmission(reference, isTransmitterPlayer, transmitterName, spell)
-    local chance = common.calculateBlightChance(reference)
     local message = "You have transmitted %s to " .. reference.object.name .. "."
     if (isTransmitterPlayer == false) then
         message = "You have contracted %s from " .. transmitterName .. "."
     end
 
-    if common.calculateChanceResult(chance) then
-        event.trigger("blight:TriggerBlight", {
-            reference = reference,
-            diseaseId = spell.id,
-            displayMessage = true,
-            message = message
-        })
-    end
+    event.trigger("blight:TriggerBlight", {
+        reference = reference,
+        diseaseId = spell.id,
+        displayMessage = true,
+        message = message
+    })
 end
 
 event.register("activate", function(e)
