@@ -21,15 +21,13 @@ end)
 event.register("blight:TriggerBlight", function(e)
     -- roll for chance of actually getting blight.
     local chance = common.calculateBlightChance(e.reference)
-    local daysPassed = tes3.worldController.daysPassed.value
-
-    if e.overrideCheck or common.calculateChanceResult(chance) == false then
-        common.debug("Reference '%s' resisted blight disease on day %s (chance was %s).", e.reference, daysPassed, chance)
+    local contracted, roll = common.calculateChanceResult(chance)
+    if e.overrideCheck or (contracted == false) then
+        common.debug("Reference '%s' resisted blight disease (rolled %s vs %s).", e.reference, roll, chance)
         return
-    else
-        common.debug("Reference '%s' contracted blight disease on day %s (chance was %s).", e.reference, daysPassed, chance)
     end
 
+    common.debug("Reference '%s' contracted blight disease (rolled %s vs %s).", e.reference, roll, chance)
     event.trigger("blight:TriggerDisease", {
         reference = e.reference,
         diseaseId = e.diseaseId,

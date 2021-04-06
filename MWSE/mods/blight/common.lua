@@ -12,7 +12,7 @@ function common.debug(str, ...)
         local info = debug.getinfo(2, "Sl")
         local module = info.short_src:match("^.+\\(.+).lua$")
         local prepend = ("[blight.%s:%s]:"):format(module, info.currentline)
-        local aligned = ("%-34s"):format(prepend)
+        local aligned = ("%-36s"):format(prepend)
         mwse.log(aligned .. str, ...)
     end
 end
@@ -39,7 +39,8 @@ function common.getKeyFromValueFunc(tbl, func)
 end
 
 function common.calculateChanceResult(chance)
-    return math.random(0, 100) <= chance
+    local roll = math.random(0, 100)
+    return roll <= chance, roll
 end
 
 function common.iterBlightDiseases(reference)

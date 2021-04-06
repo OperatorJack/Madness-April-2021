@@ -65,7 +65,7 @@ local function passiveTransmission(e)
     local daysPassed = tes3.worldController.daysPassed.value
     local lastVisitDay = getDayCellVisited(e.reference.cell)
     if lastVisitDay == daysPassed then
-        -- common.debug("Skipping '%s' (already visited on day %s, today is %s).", e.reference, lastVisitDay, daysPassed)
+        -- common.debug("Reference '%s' was reloaded on day %s.", e.reference, daysPassed)
         return
     end
 
@@ -73,15 +73,20 @@ local function passiveTransmission(e)
     local data = e.reference.data
     data.blight = data.blight or {}
 
-    -- Check for expired blight diseases on reference, remove if expired.
+    -- check for expired blight diseases on reference, remove if expired
     if data.blight.passiveTransmission then
         for spellId, day in pairs(data.blight.passiveTransmission) do
             if day <= daysPassed then
-                common.debug("Reference '%s' recovered from '%s'.", e.reference, spellId)
+                common.debug("Reference '%s' recovered from '%s' as on day %s.", e.reference, spellId, daysPassed)
                 common.removeBlight(e.reference, spellId)
                 data.blight.passiveTransmission[spellId] = nil
             end
         end
+    end
+
+    -- we don't need to do anything else if it already had blight disease
+    if common.hasBlight(e.reference) then
+        return
     end
 
     -- roll for chance of triggering passive transmission mechanic.
@@ -93,7 +98,7 @@ local function passiveTransmission(e)
         return
     end
 
-    common.debug("Reference '%s' was loaded in a blighted cell.", e.reference, spellId)
+    common.debug("Reference '%s' was loaded in a blighted cell on day %s.", e.reference, daysPassed)
     event.trigger("blight:TriggerBlight", {
         reference = e.reference,
         displayMessage = false,
@@ -107,6 +112,7 @@ end
 
 -- Trigger for actors / creatures
 event.register("mobileActivated", passiveTransmission)
+
 -- Trigger for organic containers
 event.register("referenceActivated", function(e)
     if e.reference.object.organic then
