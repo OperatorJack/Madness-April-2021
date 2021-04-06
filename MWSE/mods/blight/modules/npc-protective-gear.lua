@@ -22,7 +22,7 @@ local function equipGear()
             local object = stack.object
             if gear[object.id] then
                 ref.mobile:equip({item = object.id})
-                common.debug("Equipping %s on %s.", object.id, ref)
+                common.debug("Equipping '%s' on '%s'.", object.id, ref)
                 return
             end
         end
@@ -35,7 +35,7 @@ local function unequipGear()
             local object = stack.object
             if gear[object.id] then
                 ref.mobile:unequip({item = object.id})
-                common.debug("Unequipping %s on %s.", object.id, ref)
+                common.debug("Unequipping '%s' on '%s'.", object.id, ref)
                 return
             end
         end
@@ -110,7 +110,7 @@ event.register("referenceActivated", function(e)
             item = item
         })
 
-        common.debug("Added %s to %s.", item, reference)
+        common.debug("Added '%s' to '%s'.", item, reference)
     end
 
 

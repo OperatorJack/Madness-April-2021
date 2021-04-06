@@ -19,7 +19,7 @@ local decalTextures = {
 --
 
 local function iterBlightDecals(texturingProperty)
-    local function iter()
+    return coroutine.wrap(function()
         for i, map in ipairs(texturingProperty.maps) do
             local texture = map and map.texture
             local fileName = texture and texture.fileName
@@ -27,8 +27,7 @@ local function iterBlightDecals(texturingProperty)
                 coroutine.yield(i, map)
             end
         end
-    end
-    return coroutine.wrap(iter)
+    end)
 end
 
 local function hasBlightDecal(texturingProperty)
@@ -54,7 +53,7 @@ local function addBlightDecal(sceneNode)
                         texturingProperty:addDecalMap(table.choice(decalTextures))
                         node:attachProperty(texturingProperty)
                         node:updateProperties()
-                        common.debug("Added blight decal to %s", node.name)
+                        common.debug("Added blight decal to '%s'.", node.name)
                     end
                 end
             end
@@ -69,7 +68,7 @@ local function removeBlightDecal(sceneNode)
         if texturingProperty then
             for i in iterBlightDecals(texturingProperty) do
                 texturingProperty:removeDecalMap(i)
-                common.debug("Removed blight decal from %s", node.name)
+                common.debug("Removed blight decal from '%s'.", node.name)
             end
         end
     end
@@ -99,14 +98,13 @@ event.register("bodyPartAssigned", function(e)
     -- the bodypart scene node is available on the next frame
     timer.delayOneFrame(function()
         -- local sceneNode = e.manager:getActiveBodyPartNode(tes3.activeBodyPartLayer.base, e.index)
-        local activeBodyPart = e.manager:getActiveBodyPart(tes3.activeBodyPartLayer.base, e.index)
-        local sceneNode = activeBodyPart.node
+        local sceneNode = e.manager:getActiveBodyPart(tes3.activeBodyPartLayer.base, e.index).node
         if sceneNode then
             if common.hasBlight(e.reference) then
+                common.debug("Blighted bodypart '%s' was assigned for '%s'.", e.bodyPart, e.reference)
                 addBlightDecal(sceneNode)
             else
-                -- clear decal if it was inherited when cloning
-                removeBlightDecal(sceneNode)
+                removeBlightDecal(sceneNode) -- clear decals inherited when cloning
             end
         end
     end)
@@ -115,10 +113,10 @@ end)
 event.register("referenceActivated", function(e)
     if e.reference.object.organic then
         if common.hasBlight(e.reference) then
+            common.debug("Previously-blighted reference '%s' was loaded.", e.reference)
             addBlightDecal(e.reference.sceneNode)
         else
-            -- clear decal if it was inherited when cloning
-            removeBlightDecal(e.reference.sceneNode)
+            removeBlightDecal(e.reference.sceneNode) -- clear decals inherited when cloning
         end
     end
 end)

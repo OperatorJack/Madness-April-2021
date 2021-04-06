@@ -33,19 +33,15 @@ local function onLoaded()
                         nextProgession = math.random(2,3)
                     }
 
-                    common.debug("Registered progression for " .. spell.name)
+                    common.debug("Registered progression for '%s'.", spell.name)
                 else
-                    common.debug("Processing progression for " .. spell.name)
+                    common.debug("Processing progression for '%s'.", spell.name)
 
                     local progression = progressions[spell.id]
                     progression.days = progression.days + tes3.worldController.daysPassed.value - progression.lastDay
                     progression.lastDay = tes3.worldController.daysPassed.value
 
-                    --common.debug(json.encode(progression, { indent = true }))
-
                     if (progression.days >= progression.nextProgession) then
-                        --common.debug("Progressing for " .. spell.name)
-
                         progression.progression = progression.progression + 1
                         progression.nextProgession = math.random(2, 8)
                         progression.days = 0

@@ -14,13 +14,15 @@ end
 
 -- Track cells via the `blight.recentCells` table
 -- We use this to process a cell only once per day
-local function onCellActivated(e)
+local function onCellExit(e)
+    if not e.cell.region then return end
     local recentCells = getRecentCells()
     local editorName = e.cell.editorName
     local daysPassed = tes3.worldController.daysPassed.value
     recentCells[editorName] = daysPassed
+    common.debug("Leaving cell '%s' on day %s.", editorName, daysPassed)
 end
-event.register("cellActivated", onCellActivated)
+event.register("cellDeactivated", onCellExit)
 
 -- Clean up the `blight.recentCells` table on save
 -- Just so we can keep save files nice and minimal
@@ -41,7 +43,8 @@ local function getDayCellVisited(cell)
     return getRecentCells()[cell.editorName]
 end
 
-local function onRefCreated(e)
+-- Passive Transmission
+local function passiveTransmission(e)
     local object = e.reference.object
 
     -- ensure the reference is susceptible to blight
@@ -62,6 +65,7 @@ local function onRefCreated(e)
     local daysPassed = tes3.worldController.daysPassed.value
     local lastVisitDay = getDayCellVisited(e.reference.cell)
     if lastVisitDay == daysPassed then
+        -- common.debug("Skipping '%s' (already visited on day %s, today is %s).", e.reference, lastVisitDay, daysPassed)
         return
     end
 
@@ -73,7 +77,7 @@ local function onRefCreated(e)
     if data.blight.passiveTransmission then
         for spellId, day in pairs(data.blight.passiveTransmission) do
             if day <= daysPassed then
-                common.debug("%s recovered from %s blight disease!", e.reference, spellId)
+                common.debug("Reference '%s' recovered from '%s'.", e.reference, spellId)
                 common.removeBlight(e.reference, spellId)
                 data.blight.passiveTransmission[spellId] = nil
             end
@@ -86,20 +90,26 @@ local function onRefCreated(e)
     -- blight level 5 -> 5*5 == 25%
     local chance = blightLevel * 5
     if common.calculateChanceResult(chance) == false then
-        -- Reference does not trigger mechanic.
         return
     end
 
-    common.debug("%s has caught blight disease from passive transmission!", e.reference)
-    event.trigger("blight:TriggerDisease", {
+    common.debug("Reference '%s' was loaded in a blighted cell.", e.reference, spellId)
+    event.trigger("blight:TriggerBlight", {
         reference = e.reference,
         displayMessage = false,
-        callback = function (spell)
+        callback = function(spell)
             -- Setup information to remove disease later.
-            data.blight = data.blight or {}
             data.blight.passiveTransmission = data.blight.passiveTransmission or {}
-            data.blight.passiveTransmission[spell.id] = daysPassed + math.random(2,4)
+            data.blight.passiveTransmission[spell.id] = daysPassed + math.random(2, 4)
         end
     })
 end
-event.register("referenceActivated", onRefCreated)
+
+-- Trigger for actors / creatures
+event.register("mobileActivated", passiveTransmission)
+-- Trigger for organic containers
+event.register("referenceActivated", function(e)
+    if e.reference.object.organic then
+        passiveTransmission(e)
+    end
+end)

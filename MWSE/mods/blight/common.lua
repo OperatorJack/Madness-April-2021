@@ -8,10 +8,12 @@ local prepend = '[' .. modname .. ': DEBUG] '
 common.getBlightLevel = require("blight.modules.get-blight-level")
 
 function common.debug(str, ...)
-    if (config.debugMode == true) then
-        str = prepend .. str
-        mwse.log(str, ...)
-        tes3.messageBox(str, ...)
+    if config.debugMode then
+        local info = debug.getinfo(2, "Sl")
+        local module = info.short_src:match("^.+\\(.+).lua$")
+        local prepend = ("[blight.%s:%s]:"):format(module, info.currentline)
+        local aligned = ("%-34s"):format(prepend)
+        mwse.log(aligned .. str, ...)
     end
 end
 
@@ -92,7 +94,7 @@ function common.calculateBlightChance(reference)
     -- Modify based on helmet
     for _, stack in pairs(reference.object.equipment) do
         local object = stack.object
-		if object.objectType == tes3.objectType.armor then
+        if object.objectType == tes3.objectType.armor then
             local parts = 0
             if object.slot == tes3.armorSlot.helmet then
                 for _, part in pairs(object.parts) do
@@ -110,15 +112,15 @@ function common.calculateBlightChance(reference)
             end
 
             chance = chance - parts
-		end
-	end
+        end
+    end
 
     return chance
 end
 
 function common.hasBlight(reference, searchSpell)
     for spell in common.iterBlightDiseases(reference) do
-        if searchSpell and searchSpell.id == spell.id or not searchSpell then
+        if not searchSpell or searchSpell.id == spell.id then
             return true, spell
         end
     end
@@ -131,10 +133,7 @@ function common.addBlight(reference, spellId)
         reference.data.blight.diseases = reference.data.blight.diseases or {}
         reference.data.blight.diseases[spellId] = true
     else
-        mwscript.addSpell({
-            reference = reference,
-            spell = spellId
-        })
+        mwscript.addSpell({ reference = reference, spell = spellId })
     end
 
     event.trigger("blight:AddedBlight", {
