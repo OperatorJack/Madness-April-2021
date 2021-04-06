@@ -14,12 +14,6 @@ event.register("cellChanged", function(e)
         return
     end
 
-    -- Only proc if chance is met.
-    local blightChance = common.calculateBlightChance(tes3.player)
-    if not common.calculateChanceResult(blightChance) then
-        return
-    end
-
     common.debug("Player is contracting blight from blightstorm.")
     event.trigger("blight:TriggerBlight", { reference = tes3.player })
 end)

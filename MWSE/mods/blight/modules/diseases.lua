@@ -14,12 +14,19 @@ event.register("blight:TriggerDisease", function(e)
         tes3.messageBox(e.message, diseaseName)
     end
 
-    if (e.callback) then 
+    if (e.callback) then
         e.callback(disease)
     end
 end)
 
 event.register("blight:TriggerBlight", function(e)
+    -- roll for chance of actually getting blight.
+    chance = common.calculateBlightChance(e.reference)
+    if e.overrideCheck or common.calculateChanceResult(chance) == false then
+        -- Reference avoids catching blight.
+        return
+    end
+
     event.trigger("blight:TriggerDisease", {
         reference = e.reference,
         diseaseId = e.diseaseId,

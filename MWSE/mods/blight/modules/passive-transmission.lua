@@ -51,14 +51,6 @@ local function onRefCreated(e)
         return
     end
 
-    -- roll for chance of actually getting blight.
-    chance = common.calculateBlightChance(e.reference)
-    if common.calculateChanceResult(chance) == false then
-        -- Reference avoids catching blight.
-        return
-    end
-
-
     common.debug("%s has caught blight disease from passive transmission!", e.reference)
     event.trigger("blight:TriggerDisease", {
         reference = e.reference,
