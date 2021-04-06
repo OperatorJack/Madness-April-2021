@@ -101,7 +101,7 @@ event.register("bodyPartAssigned", function(e)
         local sceneNode = e.manager:getActiveBodyPart(tes3.activeBodyPartLayer.base, e.index).node
         if sceneNode then
             if common.hasBlight(e.reference) then
-                common.debug("Blighted bodypart '%s' was assigned for '%s'.", e.bodyPart, e.reference)
+                common.debug("'%s' was assigned a blighted bodypart ('%s') at index %s.", e.reference, e.bodyPart, e.index)
                 addBlightDecal(sceneNode)
             else
                 removeBlightDecal(sceneNode) -- clear decals inherited when cloning
@@ -113,7 +113,7 @@ end)
 event.register("referenceActivated", function(e)
     if e.reference.object.organic then
         if common.hasBlight(e.reference) then
-            common.debug("Previously-blighted reference '%s' was loaded.", e.reference)
+            common.debug("'%s' was loaded and is already blighted.", e.reference)
             addBlightDecal(e.reference.sceneNode)
         else
             removeBlightDecal(e.reference.sceneNode) -- clear decals inherited when cloning
