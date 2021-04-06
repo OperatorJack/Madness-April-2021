@@ -56,8 +56,8 @@ event.register("cellChanged", function(e)
         return
     end
 
-    if tes3.worldController.weatherController.currentWeather.index == tes3.weather.blight or
-        tes3.worldController.weatherController.currentWeather.index == tes3.weather.ash then
+    local currentWeather = tes3.worldController.weatherController.currentWeather.index
+    if currentWeather == tes3.weather.blight or currentWeather == tes3.weather.ash then
         equipGear()
     else
         unequipGear()
@@ -103,7 +103,12 @@ local function distributeGear(e)
     if success then
         -- Winner, winner! NPC gets some gear.
         local item = table.choice(gear)
-        mwscript.addItem({ reference = reference, item = item })
+        tes3.addItem({
+            reference = reference,
+            item = item,
+            updateGUI = false,
+            playSound = false,
+        })
         common.debug("'%s' recieved gear '%s' (rolled %s vs %s).", reference, item, roll, chance)
     else
         common.debug("'%s' failed to recieve gear (rolled %s vs %s)", reference, roll, chance)
@@ -112,4 +117,4 @@ local function distributeGear(e)
     reference.data.blight = reference.data.blight or {}
     reference.data.blight.protectiveGear = true
 end
-event.register("referenceActivated", distributeGear, { priority = 500 })
+event.register("mobileActivated", distributeGear, { priority = 500 })
