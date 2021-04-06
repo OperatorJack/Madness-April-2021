@@ -23,11 +23,11 @@ event.register("blight:TriggerBlight", function(e)
     local chance = common.calculateBlightChance(e.reference)
     local contracted, roll = common.calculateChanceResult(chance)
     if e.overrideCheck or (contracted == false) then
-        common.debug("Reference '%s' resisted blight disease (rolled %s vs %s).", e.reference, roll, chance)
+        common.debug("'%s' resisted blight disease (rolled %s vs %s).", e.reference, roll, chance)
         return
     end
 
-    common.debug("Reference '%s' contracted blight disease (rolled %s vs %s).", e.reference, roll, chance)
+    common.debug("'%s' contracted blight disease (rolled %s vs %s).", e.reference, roll, chance)
     event.trigger("blight:TriggerDisease", {
         reference = e.reference,
         diseaseId = e.diseaseId,

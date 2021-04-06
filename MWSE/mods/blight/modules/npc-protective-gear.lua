@@ -22,7 +22,7 @@ local function equipGear()
             local object = stack.object
             if gear[object.id] then
                 ref.mobile:equip({item = object.id})
-                common.debug("Equipping '%s' on '%s'.", object.id, ref)
+                common.debug("'%s' equipping '%s'.", ref, object.id)
                 return
             end
         end
@@ -35,7 +35,7 @@ local function unequipGear()
             local object = stack.object
             if gear[object.id] then
                 ref.mobile:unequip({item = object.id})
-                common.debug("Unequipping '%s' on '%s'.", object.id, ref)
+                common.debug("'%s' unequipping '%s'.", ref, object.id)
                 return
             end
         end
@@ -64,8 +64,10 @@ event.register("cellChanged", function(e)
     end
 end)
 
--- Ditribute gear.
-event.register("referenceActivated", function(e)
+-- Distribute gear.
+-- Priority needs to be higher than passive-transmission event
+-- otherwise the characters will not benefit from the new gear
+local function distributeGear(e)
     local reference = e.reference
 
     -- Only NPCs need some gear.
@@ -85,35 +87,29 @@ event.register("referenceActivated", function(e)
 
     -- Only NPCs who do not have helmets should get gear. Cache equipment value for later.
     local equipmentValue = 0
-     for _, stack in pairs(reference.object.equipment) do
+    for _, stack in pairs(reference.object.equipment) do
         local object = stack.object
-		if object.objectType == tes3.objectType.armor then
+        if object.objectType == tes3.objectType.armor then
             equipmentValue = equipmentValue + object.value
-
             if object.slot == tes3.armorSlot.helmet then
                 return
             end
-		end
-	end
-
-    local chance = 60
-
-    -- Rich people are more likely to wear protective gear.
-    chance = chance + equipmentValue / 100
-
-    if common.calculateChanceResult(chance) then
-        -- Winner, winner! NPC gets some gear.
-        local item = table.choice(gear)
-
-        mwscript.addItem({
-            reference = reference,
-            item = item
-        })
-
-        common.debug("Added '%s' to '%s'.", item, reference)
+        end
     end
 
+    -- Rich people are more likely to wear protective gear.
+    local chance = 60 + equipmentValue / 100
+    local success, roll = common.calculateChanceResult(chance)
+    if success then
+        -- Winner, winner! NPC gets some gear.
+        local item = table.choice(gear)
+        mwscript.addItem({ reference = reference, item = item })
+        common.debug("'%s' recieved gear '%s' (rolled %s vs %s).", reference, item, roll, chance)
+    else
+        common.debug("'%s' failed recieve gear (rolled %s vs %s)", reference, roll, chance)
+    end
 
     reference.data.blight = reference.data.blight or {}
     reference.data.blight.protectiveGear = true
-end)
+end
+event.register("referenceActivated", distributeGear, { priority = 500 })

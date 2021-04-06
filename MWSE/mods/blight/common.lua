@@ -100,13 +100,13 @@ function common.calculateBlightChance(reference)
             if object.slot == tes3.armorSlot.helmet then
                 for _, part in pairs(object.parts) do
                     if (part.type == tes3.activeBodyPart.hair) then
-                        common.debug("Calculating Blight Chance: Hair coverage found.")
+                        common.debug("'%s' hair coverage found.", reference)
                         parts = parts + 1
                     elseif (part.type == tes3.activeBodyPart.head) then
-                        common.debug("Calculating Blight Chance: Head coverage found.")
+                        common.debug("'%s' head coverage found.", reference)
                         parts = parts + 3
                     elseif (part.type == tes3.activeBodyPart.neck) then
-                        common.debug("Calculating Blight Chance: Neck coverage found.")
+                        common.debug("'%s' neck coverage found.", reference)
                         parts = parts + 1
                     end
                 end

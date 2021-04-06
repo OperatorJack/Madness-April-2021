@@ -65,7 +65,7 @@ local function passiveTransmission(e)
     local daysPassed = tes3.worldController.daysPassed.value
     local lastVisitDay = getDayCellVisited(e.reference.cell)
     if lastVisitDay == daysPassed then
-        -- common.debug("Reference '%s' was reloaded on day %s.", e.reference, daysPassed)
+        -- common.debug("'%s' was reloaded on day %s.", e.reference, daysPassed)
         return
     end
 
@@ -77,7 +77,7 @@ local function passiveTransmission(e)
     if data.blight.passiveTransmission then
         for spellId, day in pairs(data.blight.passiveTransmission) do
             if day <= daysPassed then
-                common.debug("Reference '%s' recovered from '%s' as on day %s.", e.reference, spellId, daysPassed)
+                common.debug("'%s' recovered from '%s' as on day %s.", e.reference, spellId, daysPassed)
                 common.removeBlight(e.reference, spellId)
                 data.blight.passiveTransmission[spellId] = nil
             end
@@ -98,7 +98,7 @@ local function passiveTransmission(e)
         return
     end
 
-    common.debug("Reference '%s' was loaded in a blighted cell on day %s.", e.reference, daysPassed)
+    common.debug("'%s' was loaded in a blighted cell on day %s.", e.reference, daysPassed)
     event.trigger("blight:TriggerBlight", {
         reference = e.reference,
         displayMessage = false,
