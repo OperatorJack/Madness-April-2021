@@ -8,7 +8,7 @@ local function createGeneralCategory(page)
     -- Create option to capture debug mode.
     category:createOnOffButton{
         label = "Enable Debug Mode",
-        description = "Use this option to enable debug mode.",
+        description = "Use this option to enable debug mode. Enabling debug mode can have a performance impact.",
         variable = mwse.mcm.createTableVariable{
             id = "debugMode",
             table = config
@@ -17,7 +17,7 @@ local function createGeneralCategory(page)
 
     category:createSlider{
         label = "Base Blight Transmission Chance",
-        description = "[DESC]",
+        description = "The base blight transmission chance. This is used when determining if an actor should acquire the blight disease through the various mechanics introduced in this mod: transmission, blight storms, etc. A higher value represents a higher chance of catching blight.",
         min = 0,
         max = 100,
         step = 1,
@@ -39,7 +39,7 @@ local function createTransmissionCategory(page)
 
     category:createOnOffButton{
         label = "Enable Active Transmission",
-        description = "[DESC]",
+        description = "Use this option to enable the Active Transmmission mechanic.",
         variable = mwse.mcm.createTableVariable{
             id = "enableActiveTransmission",
             table = config
@@ -48,7 +48,7 @@ local function createTransmissionCategory(page)
 
     category:createOnOffButton{
         label = "Enable Passive Transmission",
-        description = "[DESC]",
+        description = "Use this option to enable the Passive Transmmission mechanic.",
         variable = mwse.mcm.createTableVariable{
             id = "enablePassiveTransmission",
             table = config
@@ -57,7 +57,7 @@ local function createTransmissionCategory(page)
 
     category:createOnOffButton{
         label = "Enable Blightsorm Transmission",
-        description = "[DESC]",
+        description = "Use this option to enable the Blighstorm transmission mechanic.",
         variable = mwse.mcm.createTableVariable{
             id = "enableBlightstormTransmission",
             table = config
@@ -76,7 +76,7 @@ local function createProtectiveGearCategory(page)
 
     category:createOnOffButton{
         label = "Enable Protective Gear",
-        description = "[DESC]",
+        description = "Use this option to enable the Protective Gear mechanic.",
         variable = mwse.mcm.createTableVariable{
             id = "enableProtectiveGear",
             table = config
@@ -85,7 +85,7 @@ local function createProtectiveGearCategory(page)
 
     category:createOnOffButton{
         label = "Enable NPC Protective Gear Distribution",
-        description = "[DESC]",
+        description = "Use this option to enable the automatic distribution of protective gear to NPCs. Only NPCs that do not have an item for a given slot will have the chance to receive protective gear. NPCs will only be checked once. Disabling this mechanic does not remove gear already added by this mechanic.",
         variable = mwse.mcm.createTableVariable{
             id = "enableNpcProtectiveGearDistribution",
             table = config
@@ -103,7 +103,7 @@ local function createVisualEffectsCategory(page)
 
     category:createOnOffButton{
         label = "Enable Blight Decals",
-        description = "[DESC]",
+        description = "Use this option to enable the Blight Decal mechanic. This applies visual effects to entities affected by the blight, like the player, NPCs, and flora. If disabling, all decals may not be immediately removed but will be removed after restarting the game.",
         variable = mwse.mcm.createTableVariable{
             id = "enableDecalMapping",
             table = config
@@ -112,7 +112,7 @@ local function createVisualEffectsCategory(page)
 
     category:createOnOffButton{
         label = "Enable Blight Tooltips",
-        description = "[DESC]",
+        description = "Use this option to enable the Blight Tooltip mechanic. This will append '(Blighted)` to entity tooltips if the entity is blighted. Example: Tramma Root (Blighted)",
         variable = mwse.mcm.createTableVariable{
             id = "enableTooltip",
             table = config
