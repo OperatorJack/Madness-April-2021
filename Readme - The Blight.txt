@@ -1,7 +1,7 @@
 =====================================================================================
                                      The Blight
                            Authors: Greatness7, OperatorJack
-                                    Version 1.0.0
+                                    Version 1.1.0
 =====================================================================================
 
  INDEX:
@@ -65,7 +65,7 @@ Silt Strider journey during a horrid Blight storm?
 =====================================================================================
 
 Extract the archive into your Morrowind installation directory. Enable the ESP file
-in your mod manager of choice.
+in your mod manager of choice. Use the Mod Configuration Menu (MCM) to configure the mod.
 
 =====================================================================================
  KNOWN ISSUES OR BUGS:
