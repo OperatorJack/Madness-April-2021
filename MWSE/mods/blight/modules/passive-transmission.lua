@@ -45,12 +45,14 @@ end
 
 -- Passive Transmission
 local function passiveTransmission(e)
+    if not common.config.enablePassiveTransmission then return end
+
     local object = e.reference.object
 
     -- ensure the reference is susceptible to blight
-    if (object.organic ~= true
+    if  object.organic ~= true
         and object.objectType ~= tes3.objectType.npc
-        and object.objectType ~= tes3.objectType.creature)
+        and object.objectType ~= tes3.objectType.creature
     then
         return
     end

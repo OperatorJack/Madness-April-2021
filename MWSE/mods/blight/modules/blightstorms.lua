@@ -8,6 +8,8 @@ event.register("cellChanged", function(e)
     end
     tes3.setGlobal("TB_IsInExternalCell", 1)
 
+    if not common.config.enableBlightstormTransmission then return end
+
     -- Only proc during blight storm.
     local wc = tes3.worldController.weatherController
     if wc.currentWeather.index ~= tes3.weather.blight then

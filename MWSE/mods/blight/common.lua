@@ -1,14 +1,10 @@
-local config = require("blight.config")
-
-local modname = "Blight"
 local common = {}
 
-local prepend = '[' .. modname .. ': DEBUG] '
-
+common.config = require("blight.config")
 common.getBlightLevel = require("blight.modules.get-blight-level")
 
 function common.debug(str, ...)
-    if config.debugMode then
+    if common.config.debugMode then
         local info = debug.getinfo(2, "Sl")
         local module = info.short_src:match("^.+\\(.+).lua$")
         local prepend = ("[blight.%s:%s]:"):format(module, info.currentline)
@@ -78,7 +74,7 @@ function common.getTransmittableBlightDiseases(source, target)
 end
 
 function common.calculateBlightChance(reference)
-    local chance = 10 --Base Chance
+    local chance = common.config.baseBlightTransmissionChance --Base Chance
 
     -- It's a plant!
     if (reference.object.organic == true) then

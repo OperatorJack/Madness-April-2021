@@ -83,6 +83,10 @@ event.register("loaded", function(e)
 end)
 
 event.register("bodyPartAssigned", function(e)
+    if common.config.enableDecalMapping == false then
+        return
+    end
+
     -- ignore covered slots
     if e.object ~= nil then return end
 
@@ -100,6 +104,10 @@ event.register("bodyPartAssigned", function(e)
 end)
 
 event.register("referenceActivated", function(e)
+    if common.config.enableDecalMapping == false then
+        return
+    end
+
     if e.reference.object.organic and common.hasBlight(e.reference) then
         common.debug("'%s' was loaded and is already blighted.", e.reference)
         addBlightDecal(e.reference.sceneNode)
@@ -107,6 +115,10 @@ event.register("referenceActivated", function(e)
 end)
 
 event.register("blight:AddedBlight", function(e)
+    if common.config.enableDecalMapping == false then
+        return
+    end
+
     if e.reference.object.organic then
         addBlightDecal(e.reference.sceneNode)
     else

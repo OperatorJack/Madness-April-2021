@@ -15,6 +15,8 @@ local function attemptTransmission(reference, isTransmitterPlayer, transmitterNa
 end
 
 event.register("activate", function(e)
+    if not common.config.enableActiveTransmission then return end
+
     if  e.target.object.organic ~= true and
         e.target.object.objectType ~= tes3.objectType.npc and
         e.target.object.objectType ~= tes3.objectType.creature then

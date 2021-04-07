@@ -44,6 +44,10 @@ end
 
 -- Handle equipping and unequipping.
 event.register("weatherTransitionStarted", function(e)
+    if common.config.enableProtectiveGear == false then
+        return
+    end
+
     if e.to == tes3.weather.blight or e.to == tes3.weather.ash then
         equipGear()
     elseif e.from == tes3.weather.blight or e.from == tes3.weather.ash then
@@ -51,6 +55,10 @@ event.register("weatherTransitionStarted", function(e)
     end
 end)
 event.register("cellChanged", function(e)
+    if common.config.enableProtectiveGear == false then
+        return
+    end
+
     -- Only worry about protective gear in possible transmission areas.
     if common.getBlightLevel(tes3.player.cell) <= 0 then
         return
@@ -69,6 +77,10 @@ end)
 -- otherwise the characters will not benefit from the new gear
 local function distributeGear(e)
     local reference = e.reference
+
+    if common.config.enableNpcProtectiveGearDistribution == false then
+        return
+    end
 
     -- Only NPCs need some gear.
     if reference.object.objectType ~= tes3.objectType.npc then
