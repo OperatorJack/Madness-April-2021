@@ -80,6 +80,7 @@ end)
 
 event.register("loaded", function(e)
     tes3.player:updateEquipment()
+    tes3.mobilePlayer.firstPersonReference:updateEquipment()
 end)
 
 event.register("bodyPartAssigned", function(e)
@@ -123,9 +124,15 @@ event.register("blight:AddedBlight", function(e)
         addBlightDecal(e.reference.sceneNode)
     else
         e.reference:updateEquipment()
+        if e.reference == tes3.player then
+            tes3.mobilePlayer.firstPersonReference:updateEquipment()
+        end
     end
 end)
 
 event.register("blight:RemovedBlight", function(e)
     removeBlightDecal(e.reference.sceneNode)
+    if e.reference == tes3.player then
+        removeBlightDecal(tes3.mobilePlayer.firstPersonReference.sceneNode)
+    end
 end)
