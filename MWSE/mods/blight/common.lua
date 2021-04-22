@@ -102,6 +102,8 @@ function common.calculateBlightChance(reference)
 end
 
 function common.hasBlight(reference, searchSpell)
+    if reference == tes3.mobilePlayer.firstPersonReference then reference = tes3.player end
+
     for spell in common.iterBlightDiseases(reference) do
         if not searchSpell or searchSpell.id == spell.id then
             return true, spell
