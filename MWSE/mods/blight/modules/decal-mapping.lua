@@ -95,7 +95,7 @@ event.register("bodyPartAssigned", function(e)
     if bodyPartBlacklist[e.index] then return end
 
     -- the bodypart scene node is available on the next frame
-    timer.delayOneFrame(function()
+    timer.frame.delayOneFrame(function()
         local sceneNode = e.manager:getActiveBodyPart(tes3.activeBodyPartLayer.base, e.index).node
         if sceneNode and common.hasBlight(e.reference) then
             common.debug("'%s' was assigned a blighted bodypart '%s' at index %s.", e.reference, e.bodyPart, e.index)
