@@ -1,6 +1,7 @@
 local blightedCells = {}
 
 local function getBlightedCells()
+    blightedCells = {}
     for i, cell in ipairs(tes3.dataHandler.nonDynamicData.cells) do
         if cell.region and cell.region.weatherChanceBlight > 0 then
             table.insert(blightedCells, cell)
