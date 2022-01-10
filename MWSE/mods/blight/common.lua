@@ -67,12 +67,18 @@ function common.calculateBlightChance(reference)
         return chance
     end
 
-    -- It's not a plant! Proceed normally.
-
     -- Dead people can't get blight.
     if (reference.mobile.isDead == true) then
         return 0
     end
+
+    -- We must take into account blight immunity, o' Nerevar.
+    local resistance = reference.mobile.resistBlightDisease
+
+    if resistance >= 100 then return 0 end
+
+    -- Immediately roll resistance check.
+    if common.calculateChanceResult(resistance) == true then return 0 end
 
     -- Modify based on helmet
     for _, stack in pairs(reference.object.equipment) do
@@ -98,6 +104,8 @@ function common.calculateBlightChance(reference)
         end
     end
 
+    if chance < 0 then return 0 end
+    if chance > 100 then return 100 end
     return chance
 end
 
