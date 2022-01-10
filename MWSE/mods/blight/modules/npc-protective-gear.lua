@@ -106,6 +106,8 @@ local function distributeGear(e)
             if object.slot == tes3.armorSlot.helmet then
                 return
             end
+        else if object.objectType == tes3.objectType.clothing then
+            equipmentValue = equipmentValue + object.value
         end
     end
 
